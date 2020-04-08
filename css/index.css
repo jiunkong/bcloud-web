@@ -1,0 +1,40 @@
+body {
+    background-size:cover;
+    background-position: center center;
+}
+
+#OuterDiv {
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    align-items: center;
+    color:white
+}
+
+.OuterForm {
+    width: 500px;
+}
+
+.Align {
+    margin: 0 auto;
+}
+
+.TextAlignLeft {
+    text-align: left;
+}
+
+.WidthFullCenter {
+    width: 100vw;
+    text-align: center;
+}
+
+#MainText {
+    font-size:5rem;
+    vertical-align: middle;
+}
+
+@media all and (max-width: 768px) {
+    .OuterForm {
+        width: 90vw;
+    }
+}

@@ -32,7 +32,7 @@ function submit_func(){
 
     $.ajax({
         crossOrigin: true,
-        url: "https://localhost",
+        url: "https://bcloudapi.kro.kr",
         data: { name: "홍길동" },
         method: "POST",
     }).done(function(json){

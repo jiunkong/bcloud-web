@@ -17,7 +17,7 @@ function submit_func(){
         "pw" : Form['pw'].value
     }
 
-    xhr.onreadystatechange = function () {
+    /*xhr.onreadystatechange = function () {
         if (xhr.readyState === xhr.DONE) {
             if (xhr.status === 200 || xhr.status === 201) {
                 console.log(xhr.responseText);
@@ -28,7 +28,16 @@ function submit_func(){
     };
     xhr.open('POST', 'http://bcloudapi.kro.kr/login');
     xhr.setRequestHeader('Content-type', 'application/json');
-    xhr.send(JSON.stringify(data));
+    xhr.send(JSON.stringify(data));*/
+
+    $.ajax({
+        crossOrigin: true,
+        url: "https://localhost",
+        data: { name: "홍길동" },
+        method: "POST",
+    }).done(function(json){
+        console.log(json);
+    })
 
     if (Form['id'].value.length < 1 || Form['pw'].value.length < 1) {
         window.location.href = '/login?fail=2';

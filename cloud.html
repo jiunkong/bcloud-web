@@ -29,7 +29,7 @@
             <div class="header_label">
                 <div id="mySidenav" class="sidenav" style="z-index: 20;">
                     <a class="closebtn" onclick="closeNav()">&times;</a>
-                    <div class="navMainText" id="nav-id" style="white-space : nowrap;"></div>
+                    <div class="navMainText TextAlignCenter" id="nav-id" style="white-space : nowrap;"></div>
                     <div style="line-height: 20px; white-space : nowrap">
                         <span class="navText" style="padding-left: 20px;">저장 공간</span>
                         <div class="progress" style="margin-right: 15px; margin-left: 15px; height: 20px;">
@@ -41,10 +41,9 @@
                     </div>
                     <a href="#">Contact</a>
                 </div>
-                <div style="height: inherit; line-height: inherit; vertical-align: middle; text-align: center;">
-                    <!--
-                    --><div style=" display: inline-block; height: inherit; width: 100vw; position: relative;">
-                        <div onclick="openNav()" style="height:inherit; display: inline-block; padding-left: 15px; position: absolute; left: 0;">
+                <div class="TextAlignCenter">
+                    <div id="NavMenu_Out">
+                        <div onclick="openNav()" id="NavMenu_In">
                             <span>☰</span>
                             <span id="menuText"> MENU</span>
                         </div>

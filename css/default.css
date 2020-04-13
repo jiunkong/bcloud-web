@@ -18,3 +18,7 @@
 img {
     -webkit-user-drag: none;
 }
+
+.TextAlignCenter {
+    text-align: center;
+}

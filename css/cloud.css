@@ -49,7 +49,6 @@
 }
 .navMainText {
     padding: 8px 8px 6vh 8px;
-    text-align: center; 
     text-decoration: none;
     font-size: 2.5rem;
     color: #ffffff;
@@ -97,7 +96,24 @@
     white-space: nowrap;
     overflow: hidden;
 }
-
+#NavMenu_In {
+    height:inherit;
+    display: inline-block;
+    padding-left: 15px;
+    position: absolute;
+    left: 0;
+}
+#NavMenu_Out {
+    display: inline-block;
+    height: inherit;
+    width: 100vw;
+    position: relative;
+}
+#NavMenu {
+    height: inherit;
+    line-height: inherit;
+    vertical-align: middle;
+}
   
 @media screen and (max-height: 450px) {
     .sidenav {padding-top: 15px;}

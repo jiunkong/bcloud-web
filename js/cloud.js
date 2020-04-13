@@ -120,6 +120,7 @@ window.addEventListener('DOMContentLoaded', function(){
 
     document.addEventListener('mousedown', function() {
         if ((Number(event.button) === 2) || (Number(event.which) === 3)) {
+            checkMenuDisable();
             setPageMenuPosition(event.clientX, event.clientY)
             showPageMenu(true);
         }
@@ -234,6 +235,7 @@ function onMouseDown() {
 
     if ((Number(event.button) === 2) || (Number(event.which) === 3)) {
         MenuTarget = event.toElement;
+        checkMenuDisable();
         setMenuPosition(event.clientX, event.clientY)
         showMenu(true);
     }
@@ -377,5 +379,57 @@ function ondblClick(){
 
     } else {
 
+    }
+}
+
+function checkMenuDisable(){
+    // Check All Menus
+    let paste = document.getElementsByClassName('menu-paste');
+    if (CutItems.length < 1) {
+        for(let i = 0; i < paste.length; i++){
+            paste[i].classList.add('disabled');
+        }
+    } else {
+        for(let i = 0; i < paste.length; i++){
+            paste[i].classList.remove('disabled');
+        }
+    }
+
+    // Check PageMenu & MobileMenu
+    let cut = document.getElementsByClassName('menu-cut');
+    if (SelectedItems.length < 1) {
+        for(let i = 0; i < cut.length; i++){
+            cut[i].classList.add('disabled');
+        }
+    } else {
+        for(let i = 0; i < cut.length; i++){
+            cut[i].classList.remove('disabled');
+        }
+    }
+
+    // Check MobileMenu
+    let download = document.getElementsByClassName('mobilemenu-download');
+    let _delete = document.getElementsByClassName('mobilemenu-delete');
+    let rename = document.getElementsByClassName('mobilemenu-rename');
+    if (SelectedItems.length < 1) {
+        for(let i = 0; i < download.length; i++){
+            download[i].classList.add('disabled');
+        }
+        for(let i = 0; i < _delete.length; i++){
+            _delete[i].classList.add('disabled');
+        }
+        for(let i = 0; i < rename.length; i++){
+            rename[i].classList.add('disabled');
+        }
+    } else {
+        for(let i = 0; i < download.length; i++){
+            download[i].classList.remove('disabled');
+        }
+        for(let i = 0; i < _delete.length; i++){
+            _delete[i].classList.remove('disabled');
+        }
+        for(let i = 0; i < rename.length; i++){
+            rename[i].classList.remove('disabled');
+        }
     }
 }

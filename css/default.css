@@ -7,5 +7,14 @@
     -moz-user-select: -moz-none;
     -webkit-user-select: none;
     -khtml-user-select: none;
-    user-select:none;
+    user-select: none;
+}
+
+.WidthFullCenter {
+    width: 100vw;
+    text-align: center;
+}
+
+img {
+    -webkit-user-drag: none;
 }

@@ -8,40 +8,47 @@ function init_error(){
     document.getElementById('ErrEmpty').style.display = 'block';
 }
 
+function add_error(message){
+    document.getElementById("ErrorDiv").innerHTML = `<div class="alert alert-danger alert-dismissible fade show" role="alert">
+    ${message}
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+</div>`;
+}
+
 function submit_func(){
     let Form = document.forms['LoginForm'];
 
-    let xhr = new XMLHttpRequest();
-    let data = {
-        "id" : Form['id'].value,
-        "pw" : Form['pw'].value
+    if (Number(Form['id'].value.length) < 1 && Number(Form['pw'].value.length) < 1) {
+        add_error('아이디, 비밀번호를 입력해 주세요');
+        return;
+    } else if (Number(Form['id'].value.length) < 1) {
+        add_error('아이디를 입력해 주세요');
+        return;
+    } else if (Number(Form['pw'].value.length) < 1) {
+        add_error('비밀번호를 입력해 주세요');
+        return;
     }
-
-    /*xhr.onreadystatechange = function () {
-        if (xhr.readyState === xhr.DONE) {
-            if (xhr.status === 200 || xhr.status === 201) {
-                console.log(xhr.responseText);
-            } else {
-                console.error(xhr.responseText);
-            }
-        }
-    };
-    xhr.open('POST', 'http://bcloudapi.kro.kr/login');
-    xhr.setRequestHeader('Content-type', 'application/json');
-    xhr.send(JSON.stringify(data));*/
 
     $.ajax({
-        crossOrigin: true,
-        url: "https://bcloudapi.kro.kr",
-        data: { name: "홍길동" },
-        method: "POST",
-    }).done(function(json){
-        console.log(json);
+        url : "http://bcloudapi.kro.kr:3000/login",
+        data : {
+            id : Form['id'].value,
+            pw : sha512(Form['pw'].value)
+        },
+        method : "POST",
+        success : function(json){
+
+            if(json.result){
+
+                Form.action = 'cloud.html?session=' + json.session.key;
+                Form.submit();
+
+            } else {
+                add_error('로그인에 실패했습니다');
+                return;
+            }
+        }
     })
-
-    if (Form['id'].value.length < 1 || Form['pw'].value.length < 1) {
-        window.location.href = '/login?fail=2';
-    }
-
-    document.getElementById('InputPassword').value = sha512(Form['pw'].value);
 }

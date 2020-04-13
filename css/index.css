@@ -23,11 +23,6 @@ body {
     text-align: left;
 }
 
-.WidthFullCenter {
-    width: 100vw;
-    text-align: center;
-}
-
 #MainText {
     font-size:5rem;
     vertical-align: middle;

@@ -42,8 +42,7 @@ function submit_func(){
 
             if(json.result){
 
-                Form.action = 'cloud.html?session=' + json.session.key;
-                Form.submit();
+                window.location.href = 'cloud.html?session=' + json.session.key;
 
             } else {
                 add_error('로그인에 실패했습니다');

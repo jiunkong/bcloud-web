@@ -10,7 +10,7 @@ let isCtrlPressed = false;
 let MenuTarget;
 let CutItems = new Array();
 
-/*function fileDropDown(){
+function fileDropDown(){
     if (!cert) return;
 
     var dropZone = $("#dropZone");
@@ -72,9 +72,9 @@ let CutItems = new Array();
             alert("ERROR");
         }
     });
-}*/
+}
 
-/*function uploadFile(){
+function uploadFile(){
     var uploadFileList = Object.keys(fileList);
 
     if(uploadFileList.length == 0){
@@ -111,7 +111,7 @@ let CutItems = new Array();
             }
         });
     }
-}*/
+}
 
 window.addEventListener('DOMContentLoaded', function(){
     document.addEventListener('contextmenu', function() {
@@ -376,6 +376,6 @@ function ondblClick(){
         checkDisable();
 
     } else {
-        
+
     }
 }

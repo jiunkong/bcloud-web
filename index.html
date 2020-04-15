@@ -14,13 +14,16 @@
         <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap" rel="stylesheet">
         <title>Bcloud</title>
         <script type="text/javascript" src="js/index.js"></script>
+        <noscript>
+            <meta http-equiv="refresh" content="0; url=./noscript.html" />
+        </noscript>
     </head>
     <body class="no-drag" bgproperties="fixed">
         <script>
             init_background();
         </script>
         <section>
-            <div id="OuterDiv">
+            <div id="OuterDiv" onkeydown="if(Number(event.keyCode) === 13) submit_func();">
                 <div class="Align WidthFullCenter">
                     <div>
                         <img src="images/icon.png", alt="Failed to load image" width="75" height="75">      

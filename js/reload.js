@@ -32,7 +32,7 @@ function reloadFileList(){
                                 folders += `<div class="FileList" onmousedown="onMouseDown();" onclick="onClick();" ondblclick="RaisedblClickOnGrandParent();">
                                 <div onclick="RaiseClickOnChild();" ondblclick="RaisedblClickOnParent();" class="notextover" onmousedown="RaiseMouseDownOnChild();">
                                     <img src="images/ext/${findExtImage(json.dir.list[i].ext)}" width="40" height="40" onclick="RaiseClickOnGrandChild();" ondblclick="RaisedblClickOnSibling();" onmousedown="RaiseMouseDownOnGrandChild();">
-                                    <span onclick="RaiseClickOnGrandChild();" ondblclick="ondblClick();" onmousedown="RaiseMouseDownOnGrandChild();">${json.dir.list[i].name}</span>
+                                    <span onclick="RaiseClickOnGrandChild();" ondblclick="ondblClick();" onmousedown="RaiseMouseDownOnGrandChild();" data-ext="${json.dir.list[i].ext}">${json.dir.list[i].name}</span>
                                 </div>
                             </div>
                             `
@@ -40,7 +40,7 @@ function reloadFileList(){
                                 files.innerHTML += `<div class="FileList" onmousedown="onMouseDown();" onclick="onClick();" ondblclick="RaisedblClickOnGrandParent();">
                                 <div onclick="RaiseClickOnChild();" ondblclick="RaisedblClickOnParent();" class="notextover" onmousedown="RaiseMouseDownOnChild();">
                                     <img src="images/ext/${findExtImage(json.dir.list[i].ext)}" width="40" height="40" onclick="RaiseClickOnGrandChild();" ondblclick="RaisedblClickOnSibling();" onmousedown="RaiseMouseDownOnGrandChild();">
-                                    <span onclick="RaiseClickOnGrandChild();" ondblclick="ondblClick();" onmousedown="RaiseMouseDownOnGrandChild();">${json.dir.list[i].name}</span>
+                                    <span onclick="RaiseClickOnGrandChild();" ondblclick="ondblClick();" onmousedown="RaiseMouseDownOnGrandChild();" data-ext="${json.dir.list[i].ext}">${json.dir.list[i].name}</span>
                                 </div>
                                 <div style="flex: 1; display: inline-block; text-align: right; padding-right: 5px;" onclick="RaiseClickOnChild();" ondblclick="RaisedblClickOnParentSibling();" onmousedown="RaiseMouseDownOnChild();">
                                     <span onclick="RaiseClickOnGrandChild();" ondblclick="RaisedblClickOnParentSiblingChild();" onmousedown="RaiseMouseDownOnGrandChild();">${json.dir.list[i].size}</span>

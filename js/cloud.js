@@ -10,6 +10,15 @@ let isCtrlPressed = false;
 let MenuTarget;
 let CutItems = new Array();
 
+toastr.options = {
+    "escapeHtml" : true,
+    "closeButton" : true,
+    "newestOnTop" : true,
+    "progressBar": false,
+    "timeOut" : 2000,
+    "positionClass": "toast-bottom-right",
+}
+
 function fileDropDown(){
     if (!cert) return;
 
@@ -130,6 +139,28 @@ window.addEventListener('DOMContentLoaded', function(){
         showMenu(false);
     })
 
+    document.addEventListener("keydown", function(){
+        if(Number(event.keyCode) === 27){
+            cancelAllItemCut();
+        }
+
+        if(Number(event.keyCode) === 46){
+            openRemoveModal();
+        }
+
+        if(Number(event.keyCode) === 113){
+            openRenameModal();
+        }
+
+        if(Number(event.keyCode) === 88 && event.ctrlKey){
+            clickItemCut();
+        }
+
+        if(Number(event.keyCode) === 86 && event.ctrlKey){
+            clickItemPaste();
+        }
+    })
+
     document.addEventListener("deviceready", onDeviceReady, false);
 
     $.ajax({
@@ -148,6 +179,7 @@ window.addEventListener('DOMContentLoaded', function(){
                 checkDisable();
                 fileDropDown();
                 reloadFileList().then(() => reloadVolume().then(() => {
+                    checkItemCut();
                     showLoading(false);
                 }))
             } else {
@@ -265,11 +297,15 @@ function onClick() {
 
         if (previousIdx > nowIdx) {
             for(let i = previousIdx; i >= nowIdx; i--){
+                if (FileListView.children[i].style.backgroundColor !== "unset") continue;
+
                 FileListView.children[i].style.backgroundColor = "rgb(173, 222, 255)";
                 SelectedItems.push(GetSpanByFileListDiv(FileListView.children[i]));
             }
         } else if (previousIdx < nowIdx) {
             for(let i = previousIdx; i <= nowIdx; i++){
+                if (FileListView.children[i].style.backgroundColor !== "unset") continue;
+
                 FileListView.children[i].style.backgroundColor = "rgb(173, 222, 255)";
                 SelectedItems.push(GetSpanByFileListDiv(FileListView.children[i]));
             }
@@ -360,7 +396,7 @@ function ondblClick(){
 
     let span = event.srcElement;
 
-    if (GetImgSrcBySpan(span) === 'folder.png') {
+    if (span.dataset.ext === '') {
 
         showLoading(true);
 
@@ -374,11 +410,14 @@ function ondblClick(){
 
         document.getElementById("DirInput").value = Path;
 
-        reloadFileList().then(() => showLoading(false));
+        reloadFileList().then(() => {
+            checkItemCut();
+            showLoading(false);
+        });
         checkDisable();
 
     } else {
-
+        clickDownload();
     }
 }
 

@@ -22,3 +22,8 @@ img {
 .TextAlignCenter {
     text-align: center;
 }
+
+.toast-message {
+    font-size: 16px;
+    font-family: unset;
+}

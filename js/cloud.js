@@ -134,7 +134,7 @@ function uploadFile(){
             }
         });
     } else {
-        for(var i = 0; i < uploadFileList.length; i++){
+        for(var i = 0; i < fileList.length; i++){
             formData.append('files', fileList[i]);
             formData.append('name', fileList[i].name);
             formData.append('ext', fileList[i].name.substr(fileList[i].name.lastIndexOf('.')));
@@ -145,7 +145,7 @@ function uploadFile(){
         formData.append('dir', Path);
     
         $.ajax({
-            url:"http://localhost:3000/uploadmultiple",
+            url:"http://bcloudapi.kro.kr:3000/uploadmultiple",
             data : formData,
             type : 'POST',
             enctype : 'multipart/form-data',
@@ -161,7 +161,7 @@ function uploadFile(){
                 };
                 return xhr;
             },
-            success : function(result){
+            success : function(json){
                 fileList = new Array();
                 if (json.result) {
                     Session = json.session.key;

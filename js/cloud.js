@@ -10,6 +10,9 @@ let isCtrlPressed = false;
 let MenuTarget;
 let CutItems = new Array();
 
+// File list
+let fileList = new Array();
+
 toastr.options = {
     "escapeHtml" : true,
     "closeButton" : true,
@@ -22,104 +25,158 @@ toastr.options = {
 function fileDropDown(){
     if (!cert) return;
 
-    var dropZone = $("#dropZone");
-    var dropColor = $("#dropColor");
+    let dropZone = $("#dropZone");
 
     dropZone.on('dragenter', function(e){
         e.stopPropagation();
         e.preventDefault();
-        dropColor.css('opacity','1');
+        dropZone.css('background-color', '#E3F2FC');
     });
     dropZone.on('dragleave', function(e){
         e.stopPropagation();
         e.preventDefault();
-        dropColor.css('opacity','0');
+        dropZone.css('background-color','#FFFFFF');
     });
     dropZone.on('dragover', function(e){
         e.stopPropagation();
         e.preventDefault();
-        dropColor.css('opacity','1');
+        dropZone.css('background-color','#E3F2FC');
     });
-    dropZone.on('drop', function(e){
+    dropZone.on('drop',function(e){
         e.preventDefault();
-        dropColor.css('opacity','0');
+        dropZone.css('background-color','#FFFFFF');
         
-        var files = e.originalEvent.dataTransfer.files;
+        let files = e.originalEvent.dataTransfer.files;
 
-        if (files != null) {
-            if (files.length < 1) {
-                alert("폴더 업로드 불가");
+        for(let i = 0; i < files.length; i++)
+        {
+            if (files[i].type === "") {
+                toastr.error('폴더를 업로드 할 수 없습니다');
                 return;
             }
-
-            var form = $('#uploadForm');
-            var formData = new FormData(form);
-            for(var i = 0; i < uploadFileList.length; i++){
-                formData.append('files', fileList[uploadFileList[i]]);
-            }
-        
-            $.ajax({
-                url : "업로드 경로",
-                data : formData,
-                type : 'POST',
-                enctype : 'multipart/form-data',
-                processData : false,
-                contentType : false,
-                dataType : 'json',
-                cache : false,
-                success : function(result) {
-                    if(result.data.length > 0) {
-                        alert("성공");
-                        location.reload();
-                    } else {
-                        alert("실패");
-                        location.reload();
-                    }
-                }
-            });
-        } else {
-            alert("ERROR");
         }
+
+        for(let i = 0; i < files.length; i++){
+            fileList[i] = files[i];
+        }
+
+        uploadFile();
     });
 }
 
-function uploadFile(){
-    var uploadFileList = Object.keys(fileList);
+function onFileChange(){
+    let files = document.getElementById('input_file').files;
 
-    if(uploadFileList.length == 0){
-        // 파일등록 경고창
-        alert("파일이 없습니다.");
+    for(let i = 0; i < files.length; i++)
+    {
+        if (files[i].type === "") {
+            toastr.error('폴더를 업로드 할 수 없습니다');
+            return;
+        }
+    }
+
+    for(let i = 0; i < files.length; i++){
+        fileList[i] = files[i];
+    }
+
+    uploadFile();
+}
+
+// Upload file
+function uploadFile(){
+    // File list to upload
+
+    if (fileList.length < 1) {
+        toastr.error('파일이 없습니다');
         return;
     }
         
-    if(confirm("등록 하시겠습니까?")){
-        // 등록할 파일 리스트를 formData로 데이터 입력
-        var form = $('#uploadForm');
-        var formData = new FormData(form);
-        for(var i = 0; i < uploadFileList.length; i++){
-            formData.append('files', fileList[uploadFileList[i]]);
-        }
-        
+    let formData = new FormData();
+
+    if (fileList.length === 1) {
+        formData.append('file', fileList[0]);
+        formData.append('id', Id);
+        formData.append('key', Session);
+        formData.append('dir', Path);
+        formData.append('name', fileList[0].name);
+        formData.append('ext', fileList[0].name.substr(fileList[0].name.lastIndexOf('.')));
+
         $.ajax({
-            url:"업로드 경로",
-            data:formData,
-            type:'POST',
-            enctype:'multipart/form-data',
-            processData:false,
-            contentType:false,
-            dataType:'json',
-            cache:false,
-            success:function(result){
-                if(result.data.length > 0){
-                    alert("성공");
-                    location.reload();
-                }else{
-                    alert("실패");
-                    location.reload();
+            url:"http://bcloudapi.kro.kr:3000/uploadsingle",
+            data : formData,
+            type : 'POST',
+            enctype : 'multipart/form-data',
+            processData : false,
+            contentType : false,
+            dataType : 'json',
+            cache : false,
+            xhr: function() {
+                var xhr = $.ajaxSettings.xhr();
+                xhr.upload.onprogress = function(e) {
+                    var percent = e.loaded * 100 / e.total;
+                    //setProgress(percent);
+                };
+                return xhr;
+            },
+            success : function(json){
+                fileList = new Array();
+                if (json.result) {
+                    Session = json.session.key;
+                    showLoading(true);
+                    reloadFileList().then(() => {
+                        checkItemCut();
+                        showLoading(false);
+                    })
+                    toastr.success('파일 업로드 완료!');
+                } else {
+                    toastr.error('파일 업로드 실패');
                 }
             }
         });
-    }
+    } else {
+        for(var i = 0; i < uploadFileList.length; i++){
+            formData.append('files', fileList[i]);
+            formData.append('name', fileList[i].name);
+            formData.append('ext', fileList[i].name.substr(fileList[i].name.lastIndexOf('.')));
+        }
+
+        formData.append('id', Id);
+        formData.append('key', Session);
+        formData.append('dir', Path);
+    
+        $.ajax({
+            url:"http://localhost:3000/uploadmultiple",
+            data : formData,
+            type : 'POST',
+            enctype : 'multipart/form-data',
+            processData : false,
+            contentType : false,
+            dataType : 'json',
+            cache : false,
+            xhr: function() {
+                var xhr = $.ajaxSettings.xhr();
+                xhr.upload.onprogress = function(e) {
+                    var percent = e.loaded * 100 / e.total;
+                    //setProgress(percent);
+                };
+                return xhr;
+            },
+            success : function(result){
+                fileList = new Array();
+                if (json.result) {
+                    Session = json.session.key;
+                    showLoading(true);
+                    reloadFileList().then(() => {
+                        checkItemCut();
+                        showLoading(false);
+                    })
+                    toastr.success('파일 업로드 완료!');
+                } else {
+                    toastr.error('파일 업로드 실패');
+                }
+            }
+        });
+    }  
 }
 
 window.addEventListener('DOMContentLoaded', function(){

@@ -66,7 +66,7 @@ function GetSpanByFileListDiv(div) {
 }
 
 function RaiseFileInputClick() {
-    let target = document.getElementById('ChooseFile')
+    let target = document.getElementById('input_file');
     let custom = document.createEvent("MouseEvents");
     custom.initEvent("click", true, true);
     target.dispatchEvent(custom);

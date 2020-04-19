@@ -97,7 +97,7 @@
                             </button>
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
                                 <a class="dropdown-item" onclick="openCreateFolderModal();">새 폴더</a>
-                                <a class="dropdown-item" href="javascript:RaiseFileInputClick();">파일 업로드</a>
+                                <a class="dropdown-item" onclick="RaiseFileInputClick();">파일 업로드</a>
                             </div>
                         </div>
                     </div>
@@ -139,7 +139,7 @@
                             </button>
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
                                 <a class="dropdown-item" onclick="openCreateFolderModal();">새 폴더</a>
-                                <a class="dropdown-item" href="javascript:RaiseFileInputClick();">파일 업로드</a>
+                                <a class="dropdown-item" onclick="RaiseFileInputClick();">파일 업로드</a>
                             </div>
                         </div>
                         <div class="dropdown input-group-prepend">
@@ -158,9 +158,9 @@
                     </div>
                 </div>
             </header>
-            <summary style="overflow-x: hidden;" onclick="CancelAllSelection();">
+            <summary style="overflow-x: hidden;" onclick="CancelAllSelection();" id="dropZone">
                 <form name="uploadForm" id="uploadForm" enctype="multipart/form-data" method="POST">
-                    <input type="file" style="display: none;" id="ChooseFile">
+                    <input type="file" multiple="multiple" id="input_file" name="file" style="display: none;" onchange="onFileChange();">
                     <div id="FileListView">
                         <div class="spinner-border text-primary" role="status" id="Loading">
                             <span class="sr-only">Loading...</span>
@@ -270,9 +270,6 @@
                 </form>
                 <!--<form name="uploadForm" id="uploadForm" enctype="multipart/form-data" method="post">
                     <div id="dropZone" style="text-align: center;">
-                        <div style="background-color: rgb(173, 222, 255); opacity: 1; width: 100vw; height: 100vh; opacity: 0; z-index: 100;" id="dropColor">
-                            
-                        </div>
                     </div>
                 </form>
                     

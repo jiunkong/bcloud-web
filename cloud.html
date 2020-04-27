@@ -34,7 +34,7 @@
                     <a class="closebtn" onclick="closeNav()">&times;</a>
                     <div class="navMainText TextAlignCenter" id="nav-id" style="white-space : nowrap;"></div>
                     <div style="line-height: 20px; white-space : nowrap">
-                        <span class="navText" style="padding-left: 20px;">저장 공간</span>
+                        <span class="navText">저장 공간</span>
                         <div class="progress" style="margin-right: 15px; margin-left: 15px; height: 20px;">
                             <div class="progress-bar progress-bar-striped progress-bar-animated" id="Volume-Bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" style="width: 20%;"></div>       
                         </div>
@@ -42,6 +42,8 @@
                             <span id="Volume-Used">0</span>GB / <span id="Volume-Total">0</span>GB
                         </span>
                     </div>
+                    <a href="#">Uploads</a>
+                    <a href="#">비밀번호 변경</a>
                     <a href="#">Contact</a>
                 </div>
                 <div class="TextAlignCenter">
@@ -161,6 +163,8 @@
             <summary style="overflow-x: hidden;" onclick="CancelAllSelection();" id="dropZone">
                 <form name="uploadForm" id="uploadForm" enctype="multipart/form-data" method="POST">
                     <input type="file" multiple="multiple" id="input_file" name="file" style="display: none;" onchange="onFileChange();">
+                    <input type="text" name="id" style="display: none;">
+                    <input type="text" name="key" style="display: none;">
                     <div id="FileListView">
                         <div class="spinner-border text-primary" role="status" id="Loading">
                             <span class="sr-only">Loading...</span>

@@ -1,14 +1,15 @@
-let PreviousPage = new Stack();
-let NextPage = new Stack();
-let Path = "/";
-let cert = false;
-let Session = '';
-let Id = '';
-let SelectedItems = new Array();
-let isShiftPressed = false;
-let isCtrlPressed = false;
-let MenuTarget;
-let CutItems = new Array();
+let PreviousPage = new Stack(),
+    NextPage = new Stack(),
+    Path = "/",
+    cert = false,
+    Session = '',
+    Id = '',
+    SelectedItems = new Array(),
+    isShiftPressed = false,
+    isCtrlPressed = false,
+    MenuTarget,
+    CutItems = new Array();
+
 
 // File list
 let fileList = new Array();
@@ -50,7 +51,7 @@ function fileDropDown(){
 
         for(let i = 0; i < files.length; i++)
         {
-            if (files[i].type === "") {
+            if (files[i].type === "" && files[i].size === 0) {
                 toastr.error('폴더를 업로드 할 수 없습니다');
                 return;
             }
@@ -69,7 +70,7 @@ function onFileChange(){
 
     for(let i = 0; i < files.length; i++)
     {
-        if (files[i].type === "") {
+        if (files[i].type === "" && files[i].size === 0) {
             toastr.error('폴더를 업로드 할 수 없습니다');
             return;
         }
@@ -90,89 +91,138 @@ function uploadFile(){
         toastr.error('파일이 없습니다');
         return;
     }
-        
-    let formData = new FormData();
 
     if (fileList.length === 1) {
-        formData.append('file', fileList[0]);
-        formData.append('id', Id);
-        formData.append('key', Session);
-        formData.append('dir', Path);
-        formData.append('name', fileList[0].name);
-        formData.append('ext', fileList[0].name.substr(fileList[0].name.lastIndexOf('.')));
-
         $.ajax({
-            url:"http://bcloudapi.kro.kr:3000/uploadsingle",
-            data : formData,
-            type : 'POST',
-            enctype : 'multipart/form-data',
-            processData : false,
-            contentType : false,
-            dataType : 'json',
-            cache : false,
-            xhr: function() {
-                var xhr = $.ajaxSettings.xhr();
-                xhr.upload.onprogress = function(e) {
-                    var percent = e.loaded * 100 / e.total;
-                    //setProgress(percent);
-                };
-                return xhr;
+            url:"http://bcloudapi.kro.kr:3000/beforeupload",
+            data : {
+                id : Id,
+                key : Session,
+                dir : Path,
+                name : fileList[0].name,
+                ext : fileList[0].name.substr(fileList[0].name.lastIndexOf('.'))
             },
+            method : 'POST',
             success : function(json){
-                fileList = new Array();
                 if (json.result) {
                     Session = json.session.key;
-                    showLoading(true);
-                    reloadFileList().then(() => {
-                        checkItemCut();
-                        showLoading(false);
-                    })
-                    toastr.success('파일 업로드 완료!');
+
+                    let target = document.uploadForm;
+                    target.key.value = json.uploadSession.key;
+                    target.id.value = Id;
+
+                    let formData = new FormData(target);
+
+                    formData.append('file', fileList[0]);
+
+                    $.ajax({
+                        url:"http://bcloudapi.kro.kr:3000/uploadsingle",
+                        data : formData,
+                        type : 'POST',
+                        enctype : 'multipart/form-data',
+                        processData : false,
+                        contentType : false,
+                        dataType : 'json',
+                        cache : false,
+                        xhr: function() {
+                            var xhr = $.ajaxSettings.xhr();
+                            xhr.upload.onprogress = function(e) {
+                                var percent = e.loaded * 100 / e.total;
+                                //setProgress(percent);
+                            };
+                            return xhr;
+                        },
+                        success : function(json){
+                            fileList = new Array();
+                            if (json.result) {
+                                Session = json.session.key;
+                                showLoading(true);
+                                reloadFileList().then(() => {
+                                    checkItemCut();
+                                    showLoading(false);
+                                })
+                                toastr.success('파일 업로드 완료!');
+                            } else {
+                                toastr.error('파일 업로드 실패');
+                            }
+                        }
+                    });
+
                 } else {
                     toastr.error('파일 업로드 실패');
+                    return;
                 }
             }
         });
     } else {
-        for(var i = 0; i < fileList.length; i++){
-            formData.append('files', fileList[i]);
-            formData.append('name', fileList[i].name);
-            formData.append('ext', fileList[i].name.substr(fileList[i].name.lastIndexOf('.')));
+        let arr_name = new Array(),
+            arr_ext = new Array();
+
+        for (let i = 0; i < fileList.length; i++) {
+            arr_name.push(fileList[i].name);
+            arr_ext.push(fileList[i].name.substr(fileList[i].name.lastIndexOf('.')));
         }
 
-        formData.append('id', Id);
-        formData.append('key', Session);
-        formData.append('dir', Path);
-    
         $.ajax({
-            url:"http://bcloudapi.kro.kr:3000/uploadmultiple",
-            data : formData,
-            type : 'POST',
-            enctype : 'multipart/form-data',
-            processData : false,
-            contentType : false,
-            dataType : 'json',
-            cache : false,
-            xhr: function() {
-                var xhr = $.ajaxSettings.xhr();
-                xhr.upload.onprogress = function(e) {
-                    var percent = e.loaded * 100 / e.total;
-                    //setProgress(percent);
-                };
-                return xhr;
+            url:"http://bcloudapi.kro.kr:3000/beforeupload",
+            data : {
+                id : Id,
+                key : Session,
+                dir : Path,
+                name : arr_name,
+                ext : arr_ext
             },
+            method : 'POST',
             success : function(json){
-                fileList = new Array();
                 if (json.result) {
                     Session = json.session.key;
-                    showLoading(true);
-                    reloadFileList().then(() => {
-                        checkItemCut();
-                        showLoading(false);
-                    })
-                    toastr.success('파일 업로드 완료!');
+
+                    let target = document.uploadForm;
+                    target.key.value = json.uploadSession.key;
+                    target.id.value = Id;
+
+                    let formData = new FormData(target);
+
+                    for (var i = 0; i < fileList.length; i++){
+                        formData.append('files', fileList[i]);
+                    }
+
+                    $.ajax({
+                        url:"http://bcloudapi.kro.kr:3000/uploadmultiple",
+                        data : formData,
+                        type : 'POST',
+                        enctype : 'multipart/form-data',
+                        processData : false,
+                        contentType : false,
+                        dataType : 'json',
+                        cache : false,
+                        xhr: function() {
+                            var xhr = $.ajaxSettings.xhr();
+                            xhr.upload.onprogress = function(e) {
+                                var percent = e.loaded * 100 / e.total;
+                                //setProgress(percent);
+                            };
+                            return xhr;
+                        },
+                        success : function(json){
+                            fileList = new Array();
+                            if (json.result) {
+                                Session = json.session.key;
+                                showLoading(true);
+                                reloadFileList().then(() => {
+                                    checkItemCut();
+                                    showLoading(false);
+                                })
+                                toastr.success('파일 업로드 완료!');
+                            } else {
+                                toastr.error('파일 업로드 실패');
+                            }
+                        }
+                    });
+
                 } else {
                     toastr.error('파일 업로드 실패');
+                    return;
                 }
             }
         });

@@ -22,7 +22,7 @@
     transition: 0.5s;
 } 
 .sidenav a {
-    padding: 8px 8px 8px 32px;
+    padding: 8px 8px 8px 20px;
     text-decoration: none;
     font-size: 25px;
     color: #818181;
@@ -40,7 +40,7 @@
     margin-left: 50px;
 }
 .navText {
-    padding: 8px 8px 8px 32px;
+    padding: 8px 8px 8px 20px;
     text-decoration: none;
     font-size: 25px;
     color: #ffffff;

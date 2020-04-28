@@ -125,7 +125,7 @@ function removeSave() {
     if (SelectedItems_Backup.length >= 1) {
         var target = SelectedItems_Backup[SelectedItems_Backup.length - 1];
         SelectedItems_Backup = new Array();
-    } else if (MenuTarget_Backup !== undefined) {
+    } else if (MenuTarget_Backup !== undefined || MenuTarget_Backup.length < 1) {
         var target = MenuTarget_Backup.children[0].lastElementChild;
         MenuTarget_Backup = new Array();
     } else return;
@@ -155,4 +155,29 @@ function removeSave() {
             }
         }
     })
+}
+
+function openUploadProgressModal() {
+    let custom = document.createEvent("MouseEvents");
+    custom.initEvent("click", true, true);
+    document.getElementById('openUploadProgressModal').dispatchEvent(custom);
+}
+
+function getTimeRemaining(percent, start) {
+    let _milliseconds = new Date().getTime() - start;
+
+    let milliseconds = 100 / (percent / _milliseconds);
+
+    let __milliseconds = milliseconds - _milliseconds;
+    let __seconds = parseInt((__milliseconds / 1000) % 60);
+    let __minutes = parseInt((__milliseconds / (1000 * 60)) % 60);
+    let __hours = parseInt((__milliseconds / (1000 * 60 * 60)));
+
+    if (__hours > 0) {
+        return `약 ${__hours}시간 ${__minutes}분 남음`;
+    } else if (__minutes > 0) {
+        return `${__minutes}분 ${__seconds}초 남음`;
+    } else {
+        return `${__seconds}초 남음`;
+    }
 }

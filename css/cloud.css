@@ -46,6 +46,7 @@
     color: #ffffff;
     display: block;
     transition: 0.3s;
+    white-space : nowrap;
 }
 .navMainText {
     padding: 8px 8px 6vh 8px;
@@ -113,6 +114,17 @@
     height: inherit;
     line-height: inherit;
     vertical-align: middle;
+}
+.progressText {
+    font-size: 1.25rem;
+    display: inline-block;
+}
+.progressName {
+    width: calc(100% - 70px);
+}
+.progressPercent {
+    width: 60px;
+    text-align: right;
 }
   
 @media screen and (max-height: 450px) {

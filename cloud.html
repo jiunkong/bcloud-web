@@ -16,8 +16,8 @@
         <title>Bcloud</title>
         <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
         <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js" integrity="sha384-6khuMg9gaYr5AxOqhkVIODVIvm9ynTT5J4V1cfthmT+emCG6yVmEZsRHdxlotUnm" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>  
         <script type="text/javascript" src="js/data_structure.js"></script>
         <script type="text/javascript" src="js/query.js"></script>
         <script type="text/javascript" src="js/ext.js"></script>
@@ -42,9 +42,9 @@
                             <span id="Volume-Used">0</span>GB / <span id="Volume-Total">0</span>GB
                         </span>
                     </div>
-                    <a href="#">Uploads</a>
-                    <a href="#">비밀번호 변경</a>
-                    <a href="#">Contact</a>
+                    <a class="navText" onclick="openUploadProgressModal()">Uploads</a>
+                    <a class="navText" href="#">비밀번호 변경</a>
+                    <a class="navText" href="#">Contact</a>
                 </div>
                 <div class="TextAlignCenter">
                     <div id="NavMenu_Out">
@@ -267,18 +267,32 @@
                             </div>
                         </div>
 
+                        <!-- Upload Progress Modal -->
+                        <button type="button" class="btn btn-primary" id="openUploadProgressModal" data-toggle="modal" data-target="#UploadProgressModal" style="display: none;"></button>
+                        <div class="modal fade" id="UploadProgressModal" tabindex="-1" role="dialog" aria-labelledby="UploadProgressModalTitle" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalScrollableTitle">Uploads</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                <div class="modal-body" id="UploadProgressList">
+                                    <div style="width: 100%; text-align: center;" class="progressText">업로드한 파일이 없습니다</div>
+                                </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-primary" data-dismiss="modal">확인</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                         <div id="Files">
                             
                         </div>
                     </div>
-                </form>
-                <!--<form name="uploadForm" id="uploadForm" enctype="multipart/form-data" method="post">
-                    <div id="dropZone" style="text-align: center;">
-                    </div>
-                </form>
-                    
-                <a href="#" onclick="uploadFile(); return false;" class="btn bg_01">파일 업로드</a>-->
-                
+                </form>                
             </summary>
         </section>
     </body>

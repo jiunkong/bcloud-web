@@ -2,8 +2,10 @@ let PreviousPage = new Stack(),
     NextPage = new Stack(),
     Path = "/",
     cert = false,
+    isNavOpen = false,
     Session = '',
     Id = '',
+    UploadCount = 0,
     SelectedItems = new Array(),
     isShiftPressed = false,
     isCtrlPressed = false,
@@ -114,9 +116,13 @@ function uploadFile(){
                     target.key.value = json.uploadSession.key;
                     target.id.value = Id;
 
+                    let filePath = Path;
+
                     let formData = new FormData(target);
 
                     formData.append('file', fileList[0]);
+
+                    toastr.info('파일 업로드 시작');
 
                     $.ajax({
                         url:"http://bcloudapi.kro.kr:3000/uploadsingle",
@@ -128,17 +134,46 @@ function uploadFile(){
                         dataType : 'json',
                         cache : false,
                         xhr: function() {
-                            var xhr = $.ajaxSettings.xhr();
+                            let target = document.getElementById('UploadProgressList');
+
+                            if (target.children[0].innerText === '업로드한 파일이 없습니다') target.innerText = '';
+
+                            target.innerHTML = `<div style="padding-bottom: 20px;">
+                            <div class="notextover">경로 : ${filePath}</div>
+                            <span class="notextover progressText progressName">${fileList[0].name}</span>
+                            <span class="notextover progressText progressPercent" id="Percent-${UploadCount}">0%</span>
+                            <div class="progress" style="height: 20px;" id="Progress-${UploadCount}">
+                                <div class="progress-bar progress-bar-striped progress-bar-animated" id="Volume-Bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" style="width: 0%"></div>
+                            </div>
+                            <span id="Time-${UploadCount}">계산 중...</span>
+                        </div>
+                        ` + target.innerHTML;
+
+                            let temp = UploadCount;
+                            UploadCount++;
+
+                            let start = new Date().getTime();
+
+                            let xhr = $.ajaxSettings.xhr();
                             xhr.upload.onprogress = function(e) {
-                                var percent = e.loaded * 100 / e.total;
-                                //setProgress(percent);
+                                let percent = e.loaded * 100 / e.total;
+
+                                if (percent !== 100) {
+                                    var timestr = getTimeRemaining(percent, start);
+                                } else {
+                                    var timestr = '업로드 완료됨';
+                                    document.getElementById(`Progress-${temp}`).children[0].classList.remove('progress-bar-animated');
+                                }
+
+                                document.getElementById(`Percent-${temp}`).innerText = percent.toFixed(1) + '%';
+                                document.getElementById(`Progress-${temp}`).children[0].style.width = percent + '%';
+                                document.getElementById(`Time-${temp}`).innerText = timestr;
                             };
                             return xhr;
                         },
                         success : function(json){
                             fileList = new Array();
                             if (json.result) {
-                                Session = json.session.key;
                                 showLoading(true);
                                 reloadFileList().then(() => {
                                     checkItemCut();
@@ -184,11 +219,15 @@ function uploadFile(){
                     target.key.value = json.uploadSession.key;
                     target.id.value = Id;
 
+                    let filePath = Path;
+
                     let formData = new FormData(target);
 
                     for (var i = 0; i < fileList.length; i++){
                         formData.append('files', fileList[i]);
                     }
+
+                    toastr.info('파일 업로드 시작');
 
                     $.ajax({
                         url:"http://bcloudapi.kro.kr:3000/uploadmultiple",
@@ -199,18 +238,53 @@ function uploadFile(){
                         contentType : false,
                         dataType : 'json',
                         cache : false,
-                        xhr: function() {
-                            var xhr = $.ajaxSettings.xhr();
+                        xhr: function(){
+                            let target = document.getElementById('UploadProgressList');
+
+                            if (target.children[0].innerText === '업로드한 파일이 없습니다') target.innerText = '';
+
+                            let filenames = '';
+                            for(let i = 0; i < fileList.length; i++){
+                                if(i !== 0) filenames += ', ';
+                                filenames += fileList[i].name;
+                            }
+
+                            target.innerHTML = `<div style="padding-bottom: 20px;">
+                            <div class="notextover">경로 : ${filePath}</div>
+                            <span class="notextover progressText progressName">${filenames}</span>
+                            <span class="notextover progressText progressPercent" id="Percent-${UploadCount}">0%</span>
+                            <div class="progress" style="height: 20px;" id="Progress-${UploadCount}">
+                                <div class="progress-bar progress-bar-striped progress-bar-animated" id="Volume-Bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" style="width: 0%"></div>
+                            </div>
+                            <span id="Time-${UploadCount}">계산 중...</span>
+                        </div>
+                        ` + target.innerHTML;
+
+                            let temp = UploadCount;
+                            UploadCount++;
+
+                            let start = new Date().getTime();
+
+                            let xhr = $.ajaxSettings.xhr();
                             xhr.upload.onprogress = function(e) {
-                                var percent = e.loaded * 100 / e.total;
-                                //setProgress(percent);
+                                let percent = e.loaded * 100 / e.total;
+
+                                if (percent !== 100) {
+                                    var timestr = getTimeRemaining(percent, start);
+                                } else {
+                                    var timestr = '업로드 완료됨';
+                                    document.getElementById(`Progress-${temp}`).children[0].classList.remove('progress-bar-animated');
+                                }
+
+                                document.getElementById(`Percent-${temp}`).innerText = percent.toFixed(1) + '%';
+                                document.getElementById(`Progress-${temp}`).children[0].style.width = percent + '%';
+                                document.getElementById(`Time-${temp}`).innerText = timestr;
                             };
                             return xhr;
                         },
                         success : function(json){
                             fileList = new Array();
                             if (json.result) {
-                                Session = json.session.key;
                                 showLoading(true);
                                 reloadFileList().then(() => {
                                     checkItemCut();
@@ -247,6 +321,7 @@ window.addEventListener('DOMContentLoaded', function(){
 
     document.addEventListener("click", function(e) {
         showMenu(false);
+        closeNav();
     })
 
     document.addEventListener("keydown", function(){
@@ -269,7 +344,21 @@ window.addEventListener('DOMContentLoaded', function(){
         if(Number(event.keyCode) === 86 && event.ctrlKey){
             clickItemPaste();
         }
+
+        if(Number(event.keyCode) === 76 && event.shiftKey){
+            openUploadProgressModal();
+        }
+
+        if(Number(event.keyCode) === 85 && event.shiftKey){
+            RaiseFileInputClick();
+        }
+
+        if(Number(event.keyCode) === 78 && event.shiftKey){
+            openCreateFolderModal();
+        }
     })
+
+    $("[data-toggle='tooltip']").tooltip();
 
     document.addEventListener("deviceready", onDeviceReady, false);
 
@@ -288,10 +377,10 @@ window.addEventListener('DOMContentLoaded', function(){
                 document.getElementById("DirInput").value = Path;
                 checkDisable();
                 fileDropDown();
-                reloadFileList().then(() => reloadVolume().then(() => {
+                reloadFileList().then(() => {
                     checkItemCut();
                     showLoading(false);
-                }))
+                })
             } else {
                 window.location.href = 'index.html';
                 return;
@@ -319,6 +408,7 @@ function onBackKeyDown() {
 function openNav(){
     if (!cert) return;
     document.getElementById("mySidenav").style.width = "300px";
+    event.stopPropagation();
 }
   
 function closeNav(){

@@ -54,6 +54,8 @@ function reloadFileList(){
                         files.innerHTML = (folders + files.innerHTML);
                     }
 
+                    reloadVolume();
+
                     resolve();
                 } else {
                     if(json.result) Session = json.session.key;

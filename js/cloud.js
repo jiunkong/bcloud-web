@@ -66,7 +66,9 @@ function fileDropDown(){
 }
 
 function onFileChange(){
-    let files = document.getElementById('input_file').files;
+    if (!cert) return;
+
+    let files = document.uploadForm.file.files;
 
     for(let i = 0; i < files.length; i++)
     {
@@ -80,6 +82,7 @@ function onFileChange(){
         fileList[i] = files[i];
     }
 
+    document.uploadForm.file.value = "";
     uploadFile();
 }
 

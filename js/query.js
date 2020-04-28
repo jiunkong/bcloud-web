@@ -1,6 +1,10 @@
 function getQueryString(){
     let ret = {};
-    let query = window.location.href.substr(window.location.href.indexOf('?') + 1);
+    let arguments = window.location.href.indexOf('?');
+
+    if (arguments === -1) window.location.href = 'index.html';
+
+    let query = window.location.href.substr(arguments + 1);
     let arr = query.split('&');
 
     for(let i = 0; i < arr.length; i++){

@@ -29,6 +29,9 @@ function findExtImage(ext) {
         case 'txt':
         case 'wav':
         case 'zip':
+        case 'gz':
+        case 'bat':
+        case 'ico':
             return (ext + '.png');
         case 'htm':
             return 'html.png';

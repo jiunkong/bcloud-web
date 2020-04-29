@@ -104,15 +104,33 @@ function createFolderSave() {
 
 function openRemoveModal() {
     if (SelectedItems.length >= 1) {
-        var target = SelectedItems[SelectedItems.length - 1];
+        if (SelectedItems.length === 1) {
+            let target = SelectedItems[0];
+
+            if (target.dataset.ext === '') document.getElementById('RemoveConfirmText').innerText = `정말 ${target.innerText} 폴더를 삭제하시겠습니까?\n폴더 안에 있는 파일이 모두 삭제됩니다!`;
+            else document.getElementById('RemoveConfirmText').innerText = `정말 ${target.innerText} 파일을 삭제하시겠습니까?\n삭제한 파일은 복구할 수 없습니다!`;
+        } else {
+            let file = 0, folder = 0;
+
+            for(let i = 0; i < SelectedItems.length; i++) {
+                if (SelectedItems[i].dataset.ext === '') folder++;
+                else file++;
+            }
+
+            let target = document.getElementById('RemoveConfirmText');
+            if (file !== 0 && folder !== 0) target.innerText = `정말 폴더 ${folder}개와 파일 ${file}개를 삭제하시겠습니까?\n삭제하면 복구할 수 없습니다!`;
+            else if (file !== 0) target.innerText = `정말 파일 ${file}개를 삭제하시겠습니까?\n삭제한 파일은 복구할 수 없습니다!`;
+            else if (folder !== 0) target.innerText = `정말 폴더 ${folder}개를 삭제하시겠습니까?\n폴더 안에 있는 파일이 모두 삭제됩니다!`;
+        }
+
         SelectedItems_Backup = SelectedItems;
     } else if (MenuTarget !== undefined) {
         var target = MenuTarget.children[0].lastElementChild;
         MenuTarget_Backup = MenuTarget;
-    } else return;
 
-    if (target.dataset.ext === '') document.getElementById('RemoveConfirmText').innerText = `정말 ${target.innerText} 폴더를 삭제하시겠습니까?\n폴더 안에 있는 파일이 모두 삭제됩니다!`;
-    else document.getElementById('RemoveConfirmText').innerText = `정말 ${target.innerText} 파일을 삭제하시겠습니까?\n삭제한 파일은 복구할 수 없습니다!`;
+        if (target.dataset.ext === '') document.getElementById('RemoveConfirmText').innerText = `정말 ${target.innerText} 폴더를 삭제하시겠습니까?\n폴더 안에 있는 파일이 모두 삭제됩니다!`;
+        else document.getElementById('RemoveConfirmText').innerText = `정말 ${target.innerText} 파일을 삭제하시겠습니까?\n삭제한 파일은 복구할 수 없습니다!`;
+    } else return;
 
     let custom = document.createEvent("MouseEvents");
     custom.initEvent("click", true, true);
@@ -123,38 +141,101 @@ function removeSave() {
     showLoading(true);
 
     if (SelectedItems_Backup.length >= 1) {
-        var target = SelectedItems_Backup[SelectedItems_Backup.length - 1];
-        SelectedItems_Backup = new Array();
-    } else if (MenuTarget_Backup !== undefined || MenuTarget_Backup.length < 1) {
-        var target = MenuTarget_Backup.children[0].lastElementChild;
-        MenuTarget_Backup = new Array();
-    } else return;
+        if (SelectedItems.length === 1) {
+            let target = SelectedItems_Backup[0];
 
-    $.ajax({
-        url : "http://bcloudapi.kro.kr:3000/remove",
-        data : {
-            id : Id,
-            key : Session,
-            dir : Path,
-            target : target.innerText
-        },
-        method : "POST",
-        success : function(json){
-            if (!json.remove.error) {
-                Session = json.session.key;
-                reloadFileList().then(() => {
-                    checkItemCut();
-                    showLoading(false);
-                });
-                $('#RemoveModal').modal('hide');
-                toastr.success('파일 삭제 완료!');
-            } else {
-                if (json.result) Session = json.session.key;
+            $.ajax({
+                url : "http://bcloudapi.kro.kr:3000/remove",
+                data : {
+                    id : Id,
+                    key : Session,
+                    dir : Path,
+                    target : target.innerText
+                },
+                method : "POST",
+                success : function(json){
+                    if (!json.remove.error) {
+                        Session = json.session.key;
+                        reloadFileList().then(() => {
+                            checkItemCut();
+                            showLoading(false);
+                        });
+                        $('#RemoveModal').modal('hide');
+                        toastr.success('파일 삭제 완료!');
+                    } else {
+                        if (json.result) Session = json.session.key;
+        
+                        toastr.error('파일 삭제 실패');
+                    }
+                }
+            })
+        } else {
+            let target = new Array();
 
-                toastr.error('파일 삭제 실패');
+            for(let i = 0; i < SelectedItems_Backup.length; i++){
+                target.push(SelectedItems_Backup[i].innerText);
             }
+
+            $.ajax({
+                url : "http://bcloudapi.kro.kr:3000/removemultiple",
+                data : {
+                    id : Id,
+                    key : Session,
+                    dir : Path,
+                    target : target
+                },
+                method : "POST",
+                success : function(json){
+                    if (!json.remove.error) {
+                        Session = json.session.key;
+                        reloadFileList().then(() => {
+                            checkItemCut();
+                            showLoading(false);
+                        });
+                        $('#RemoveModal').modal('hide');
+                        toastr.success('파일 삭제 완료!');
+                    } else {
+                        if (json.result) Session = json.session.key;
+        
+                        toastr.error('파일 삭제 실패');
+                    }
+                }
+            })
         }
-    })
+
+        SelectedItems_Backup = new Array();
+
+        
+    } else if (MenuTarget_Backup !== undefined || MenuTarget_Backup.length < 1) {
+        let target = MenuTarget_Backup.children[0].lastElementChild;
+        MenuTarget_Backup = new Array();
+
+        $.ajax({
+            url : "http://bcloudapi.kro.kr:3000/remove",
+            data : {
+                id : Id,
+                key : Session,
+                dir : Path,
+                target : target.innerText
+            },
+            method : "POST",
+            success : function(json){
+                if (!json.remove.error) {
+                    Session = json.session.key;
+                    reloadFileList().then(() => {
+                        checkItemCut();
+                        showLoading(false);
+                    });
+                    $('#RemoveModal').modal('hide');
+                    toastr.success('파일 삭제 완료!');
+                } else {
+                    if (json.result) Session = json.session.key;
+    
+                    toastr.error('파일 삭제 실패');
+                }
+            }
+        })
+    } else return;
 }
 
 function openUploadProgressModal() {

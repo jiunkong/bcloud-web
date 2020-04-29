@@ -17,7 +17,7 @@ let PreviousPage = new Stack(),
 let fileList = new Array();
 
 toastr.options = {
-    "escapeHtml" : true,
+    //"escapeHtml" : true,
     "closeButton" : true,
     "newestOnTop" : true,
     "progressBar": false,
@@ -122,7 +122,7 @@ function uploadFile(){
 
                     formData.append('file', fileList[0]);
 
-                    toastr.info('파일 업로드 시작');
+                    toastr.info('파일 업로드 시작<br><a onclick="openUploadProgressModal()" >[업로드 보기]</a>');
 
                     $.ajax({
                         url:"http://bcloudapi.kro.kr:3000/uploadsingle",
@@ -227,7 +227,7 @@ function uploadFile(){
                         formData.append('files', fileList[i]);
                     }
 
-                    toastr.info('파일 업로드 시작');
+                    toastr.info('파일 업로드 시작<br><a onclick="openUploadProgressModal()" >[업로드 보기]</a>');
 
                     $.ajax({
                         url:"http://bcloudapi.kro.kr:3000/uploadmultiple",
@@ -631,6 +631,19 @@ function checkMenuDisable(){
     } else {
         for(let i = 0; i < paste.length; i++){
             paste[i].classList.remove('disabled');
+        }
+    }
+
+    let share = document.getElementsByClassName('menu-share');
+    if (share !== null) {
+        if (SelectedItems.length < 1) {
+            for(let i = 0; i < share.length; i++){
+                share[i].classList.add('disabled');
+            }
+        } else {
+            for(let i = 0; i < share.length; i++){
+                share[i].classList.remove('disabled');
+            }
         }
     }
 

@@ -280,3 +280,44 @@ async function clickDownload() {
         })
     } else return;
 }
+
+async function clickShare() {
+    if (SelectedItems.length >= 1) {
+        var target = SelectedItems[SelectedItems.length - 1];
+    } else if (MenuTarget !== undefined) {
+        var target = MenuTarget.children[0].lastElementChild;
+    }
+
+    await (function(){
+        return new Promise(function(resolve, reject){
+            $.ajax({
+                url : "http://bcloudapi.kro.kr:3000/share",
+                data : {
+                    id : Id,
+                    key : Session,
+                    dir : Path,
+                    name : target.innerText
+                },
+                method : "POST",
+                success : function(json){
+                    if (json.result) {
+                        Session = json.session.key;
+
+                        let dummy = document.createElement("textarea");
+                        document.body.appendChild(dummy);
+                        dummy.value = `http://bcloudapi.kro.kr:3000/share?file=${json.share.key}`;
+                        dummy.select();
+                        document.execCommand("copy");
+                        document.body.removeChild(dummy);
+
+                        toastr.success(`링크를 클립보드에 저장했습니다!`);
+                        resolve();
+                    } else {
+                        toastr.error('링크 공유 실패');
+                        reject();
+                    }
+                }
+            })
+        })
+    })();
+}

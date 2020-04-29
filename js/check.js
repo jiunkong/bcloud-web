@@ -77,6 +77,7 @@ if (isTabletDevice()) {
             <a class="dropdown-item menu-cut" onclick="clickItemCut();">잘라내기</a>
             <a class="dropdown-item menu-paste" onclick="clickItemPaste();">붙여넣기</a>
             <a class="dropdown-item mobilemenu-download" onclick="clickDownload();">다운로드</a>
+            <a class="dropdown-item menu-share" onclick="clickShare();">링크 공유</a>
         </div>
     </div>
 </div>
@@ -135,6 +136,7 @@ if (isTabletDevice()) {
                 <a class="dropdown-item menu-cut" onclick="clickItemCut();">잘라내기</a>
                 <a class="dropdown-item menu-paste" onclick="clickItemPaste();">붙여넣기</a>
                 <a class="dropdown-item mobilemenu-download" onclick="clickDownload();">다운로드</a>
+                <a class="dropdown-item menu-share" onclick="clickShare();">링크 공유</a>
             </div>
         </div>
     </div>

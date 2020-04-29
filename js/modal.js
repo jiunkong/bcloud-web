@@ -53,7 +53,7 @@ function renameSave() {
                 toastr.success('이름 변경 완료!');
             } else {
                 if (json.result) Session = json.session.key;
-
+                $('#RenameModal').modal('hide');
                 toastr.error('이름 변경 실패');
             }
         }
@@ -95,7 +95,7 @@ function createFolderSave() {
                 toastr.success('폴더 생성 완료!');
             } else {
                 if (json.result) Session = json.session.key;
-
+                $('#CreateFolderModal').modal('hide');
                 toastr.error('폴더 생성 실패');
             }
         }
@@ -164,7 +164,7 @@ function removeSave() {
                         toastr.success('파일 삭제 완료!');
                     } else {
                         if (json.result) Session = json.session.key;
-        
+                        $('#RemoveModal').modal('hide');
                         toastr.error('파일 삭제 실패');
                     }
                 }
@@ -196,7 +196,7 @@ function removeSave() {
                         toastr.success('파일 삭제 완료!');
                     } else {
                         if (json.result) Session = json.session.key;
-        
+                        $('#RemoveModal').modal('hide');
                         toastr.error('파일 삭제 실패');
                     }
                 }
@@ -230,7 +230,7 @@ function removeSave() {
                     toastr.success('파일 삭제 완료!');
                 } else {
                     if (json.result) Session = json.session.key;
-    
+                    $('#RemoveModal').modal('hide');
                     toastr.error('파일 삭제 실패');
                 }
             }

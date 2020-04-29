@@ -1,0 +1,18 @@
+#menuText {
+    display: none;
+}
+#FileListView {
+    height: calc(100vh - 152px);
+    margin: 0 10px;
+    padding: 20px 0 20px 0;
+    overflow-y: auto;
+    position: relative;
+    overflow-x: hidden;
+}
+#Loading {
+    top: calc(50vh - 152px + 5vmin);
+    left: calc(50vw - 5vmin);
+    position: absolute;
+    width: 10vmin;
+    height: 10vmin;
+}

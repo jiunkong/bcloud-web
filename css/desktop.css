@@ -1,0 +1,15 @@
+#FileListView {
+    overflow-y: auto;
+    height: calc(100vh - 118px);
+    position: relative;
+    padding: 40px 0 40px 0;
+    margin: 0 40px;
+    overflow-x: hidden;
+}
+#Loading {
+    position: absolute; 
+    top: calc(50vh - 118px - 5vmin);
+    left: calc(50vw - 5vmin);
+    width: 10vmin;
+    height: 10vmin;
+}

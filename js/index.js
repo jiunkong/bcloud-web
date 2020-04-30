@@ -32,17 +32,30 @@ function submit_func(){
     }
 
     $.ajax({
-        url : "http://bcloudapi.kro.kr:3000/login",
+        url : "https://raw.bcloud.kro.kr:3000/salt",
         data : {
-            id : Form['id'].value,
-            pw : sha512(Form['pw'].value)
+            id : Form['id'].value
         },
         method : "POST",
         success : function(json){
-
             if(json.result){
 
-                window.location.href = 'cloud.html?session=' + json.session.key;
+                $.ajax({
+                    url : "https://raw.bcloud.kro.kr:3000/login",
+                    data : {
+                        id : Form['id'].value,
+                        pw : sha512(json.salt + Form['pw'].value)
+                    },
+                    method : "POST",
+                    success : function(json2){
+                        if(json2.result){
+                            window.location.href = 'cloud.html?session=' + json2.session.key;
+                        } else {
+                            add_error('로그인에 실패했습니다');
+                            return;
+                        }
+                    }
+                })
 
             } else {
                 add_error('로그인에 실패했습니다');

@@ -39,7 +39,7 @@ function renameSave() {
     SelectedItems_Backup = new Array();
 
     $.ajax({
-        url : "http://bcloudapi.kro.kr:3000/rename",
+        url : "https://raw.bcloud.kro.kr:3000/rename",
         data : {
             id : Id,
             key : Session,
@@ -87,7 +87,7 @@ function createFolderSave() {
     }
 
     $.ajax({
-        url : "http://bcloudapi.kro.kr:3000/createfolder",
+        url : "https://raw.bcloud.kro.kr:3000/createfolder",
         data : {
             id : Id,
             key : Session,
@@ -156,7 +156,7 @@ function removeSave() {
             let target = SelectedItems_Backup[0];
 
             $.ajax({
-                url : "http://bcloudapi.kro.kr:3000/remove",
+                url : "https://raw.bcloud.kro.kr:3000/remove",
                 data : {
                     id : Id,
                     key : Session,
@@ -188,7 +188,7 @@ function removeSave() {
             }
 
             $.ajax({
-                url : "http://bcloudapi.kro.kr:3000/removemultiple",
+                url : "https://raw.bcloud.kro.kr:3000/removemultiple",
                 data : {
                     id : Id,
                     key : Session,
@@ -222,7 +222,7 @@ function removeSave() {
         MenuTarget_Backup = undefined;
 
         $.ajax({
-            url : "http://bcloudapi.kro.kr:3000/remove",
+            url : "https://raw.bcloud.kro.kr:3000/remove",
             data : {
                 id : Id,
                 key : Session,

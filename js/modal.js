@@ -32,6 +32,7 @@ function renameSave() {
 
     if(input.value.indexOf('/') !== -1){
         toastr.error('파일 이름에 /를 사용할 수 없습니다');
+        showLoading(false);
         return;
     }
 
@@ -83,6 +84,7 @@ function createFolderSave() {
 
     if(input.value.indexOf('/') !== -1){
         toastr.error('폴더 이름에 /를 사용할 수 없습니다');
+        showLoading(false);
         return;
     }
 

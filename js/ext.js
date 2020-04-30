@@ -1,6 +1,6 @@
 function findExtImage(ext) {
     if(ext.length < 1) return 'folder.png'
-    else ext = ext.substr(1);
+    else ext = ext.toLowerCase().substr(1);
 
     switch(ext) {
         case '7z':

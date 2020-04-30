@@ -1,4 +1,4 @@
-let MenuTarget_Backup = new Array();
+let MenuTarget_Backup;
 let SelectedItems_Backup = new Array();
 
 function openRenameModal() {
@@ -22,15 +22,21 @@ function renameSave() {
 
     if (SelectedItems_Backup.length >= 1) {
         var target = SelectedItems_Backup[SelectedItems_Backup.length - 1];
-        SelectedItems_Backup = new Array();
     } else if (MenuTarget_Backup !== undefined) {
         var target = MenuTarget_Backup.children[0].lastElementChild;
-        MenuTarget_Backup = new Array();
     } else return;
 
     let input = document.getElementById('InputNewName');
 
     if (input.value === target.innerText.substr(0, target.innerText.length - target.dataset.ext.length)) return;
+
+    if(input.value.indexOf('/') !== -1){
+        toastr.error('파일 이름에 /를 사용할 수 없습니다');
+        return;
+    }
+
+    MenuTarget_Backup = undefined;
+    SelectedItems_Backup = new Array();
 
     $.ajax({
         url : "http://bcloudapi.kro.kr:3000/rename",
@@ -74,6 +80,11 @@ function createFolderSave() {
     showLoading(true);
 
     let input = document.getElementById('InputFolderName');
+
+    if(input.value.indexOf('/') !== -1){
+        toastr.error('폴더 이름에 /를 사용할 수 없습니다');
+        return;
+    }
 
     $.ajax({
         url : "http://bcloudapi.kro.kr:3000/createfolder",
@@ -141,7 +152,7 @@ function removeSave() {
     showLoading(true);
 
     if (SelectedItems_Backup.length >= 1) {
-        if (SelectedItems.length === 1) {
+        if (SelectedItems_Backup.length === 1) {
             let target = SelectedItems_Backup[0];
 
             $.ajax({
@@ -206,9 +217,9 @@ function removeSave() {
         SelectedItems_Backup = new Array();
 
         
-    } else if (MenuTarget_Backup !== undefined || MenuTarget_Backup.length < 1) {
+    } else if (MenuTarget_Backup !== undefined) {
         let target = MenuTarget_Backup.children[0].lastElementChild;
-        MenuTarget_Backup = new Array();
+        MenuTarget_Backup = undefined;
 
         $.ajax({
             url : "http://bcloudapi.kro.kr:3000/remove",

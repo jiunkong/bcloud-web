@@ -24,6 +24,11 @@ function isTabletDevice() {
     return false;
 }
 
+history.pushState(null, null, location.href);
+window.onpopstate = function () {
+    history.go(1);
+};
+
 if (isTabletDevice()) {
     document.getElementById('media-menu').innerHTML += `<div class="input-group">
     <div class="input-group-prepend">

@@ -11,8 +11,10 @@ let PreviousPage = new Stack(),
     isShiftPressed = false,
     isCtrlPressed = false,
     MenuTarget,
+    delay,
     CutItems = new Array();
 
+const PressTime = 1000;
 
 // File list
 let fileList = new Array();
@@ -332,12 +334,6 @@ window.addEventListener('DOMContentLoaded', function(){
         closeNav();
     })
 
-    if(isMobile){
-        document.addEventListener("long-press", function() {
-            console.log('long-press')
-        })
-    }
-
     document.addEventListener("keydown", function(){
         if(Number(event.keyCode) === 27){
             cancelAllItemCut();
@@ -357,6 +353,10 @@ window.addEventListener('DOMContentLoaded', function(){
 
         if(Number(event.keyCode) === 86 && event.ctrlKey){
             clickItemPaste();
+        }
+
+        if(Number(event.keyCode) === 81 && event.ctrlKey){
+            clickLogout();
         }
 
         if(Number(event.keyCode) === 76 && event.shiftKey){
@@ -492,6 +492,27 @@ function onMouseDown() {
     }
 }
 
+function TouchStart() {
+    event.stopPropagation();
+
+    delay = setTimeout(EnterLongPressState, PressTime, event);
+}
+
+function TouchEnd() {
+    event.stopPropagation();
+
+    clearTimeout(delay);
+}
+
+function EnterLongPressState(event) {
+    SelectedItems = new Array();
+    CancelAllSelection();
+    LongPressState = true;
+    event.srcElement.style.backgroundColor = "rgb(173, 222, 255)";
+    event.srcElement.children[0].firstElementChild.src = 'images/select.png';
+    SelectedItems.push(GetSpanByFileListDiv(event.toElement));
+}
+
 function onClick() { 
     event.stopPropagation();
 
@@ -499,59 +520,75 @@ function onClick() {
 
     let FileListView = event.toElement.parentElement;
 
-    if (isShiftPressed || event.shiftKey) {
-
-        if (SelectedItems.length < 1) {
-            event.toElement.style.backgroundColor = "rgb(173, 222, 255)";
-            SelectedItems.push(GetSpanByFileListDiv(event.toElement));
-        }
-
-        let previousIdx = Array.from(FileListView.children).findIndex(function(element){
-            return element === SelectedItems[SelectedItems.length - 1].parentElement.parentElement;
-        })
-
-        let nowIdx = Array.from(FileListView.children).findIndex(function(element){
-            return element === event.toElement;
-        })
-
-        if (previousIdx > nowIdx) {
-            for(let i = previousIdx; i >= nowIdx; i--){
-                if (FileListView.children[i].style.backgroundColor !== "unset") continue;
-
-                FileListView.children[i].style.backgroundColor = "rgb(173, 222, 255)";
-                SelectedItems.push(GetSpanByFileListDiv(FileListView.children[i]));
-            }
-        } else if (previousIdx < nowIdx) {
-            for(let i = previousIdx; i <= nowIdx; i++){
-                if (FileListView.children[i].style.backgroundColor !== "unset") continue;
-
-                FileListView.children[i].style.backgroundColor = "rgb(173, 222, 255)";
-                SelectedItems.push(GetSpanByFileListDiv(FileListView.children[i]));
-            }
-        }
-
-        isShiftPressed = false;
-
-    } else if (isCtrlPressed || event.ctrlKey) {
-
-        if (event.toElement.style.backgroundColor !== "unset") {
-            event.toElement.style.backgroundColor = "unset";
+    if (isMobile && LongPressState) {
+        if (event.srcElement.style.backgroundColor !== "unset") {
+            event.srcElement.style.backgroundColor = "unset";
+            event.srcElement.children[0].firstElementChild.src = 'images/ext/' + findExtImage(event.toElement.children[0].lastElementChild.dataset.ext);
             let idx = SelectedItems.findIndex(function(element){
                 return element === GetSpanByFileListDiv(event.toElement);
             })
             if (idx > -1) SelectedItems.splice(idx, 1);
+            if (SelectedItems.length < 1) LongPressState = false;
         } else {
+            event.srcElement.style.backgroundColor = "rgb(173, 222, 255)";
+            event.srcElement.children[0].firstElementChild.src = 'images/select.png';
+            SelectedItems.push(GetSpanByFileListDiv(event.srcElement));
+        }
+    } else {
+        if (isShiftPressed || event.shiftKey) {
+
+            if (SelectedItems.length < 1) {
+                event.toElement.style.backgroundColor = "rgb(173, 222, 255)";
+                SelectedItems.push(GetSpanByFileListDiv(event.toElement));
+            }
+    
+            let previousIdx = Array.from(FileListView.children).findIndex(function(element){
+                return element === SelectedItems[SelectedItems.length - 1].parentElement.parentElement;
+            })
+    
+            let nowIdx = Array.from(FileListView.children).findIndex(function(element){
+                return element === event.toElement;
+            })
+    
+            if (previousIdx > nowIdx) {
+                for(let i = previousIdx; i >= nowIdx; i--){
+                    if (FileListView.children[i].style.backgroundColor !== "unset") continue;
+    
+                    FileListView.children[i].style.backgroundColor = "rgb(173, 222, 255)";
+                    SelectedItems.push(GetSpanByFileListDiv(FileListView.children[i]));
+                }
+            } else if (previousIdx < nowIdx) {
+                for(let i = previousIdx; i <= nowIdx; i++){
+                    if (FileListView.children[i].style.backgroundColor !== "unset") continue;
+    
+                    FileListView.children[i].style.backgroundColor = "rgb(173, 222, 255)";
+                    SelectedItems.push(GetSpanByFileListDiv(FileListView.children[i]));
+                }
+            }
+    
+            isShiftPressed = false;
+    
+        } else if (isCtrlPressed || event.ctrlKey) {
+    
+            if (event.toElement.style.backgroundColor !== "unset") {
+                event.toElement.style.backgroundColor = "unset";
+                let idx = SelectedItems.findIndex(function(element){
+                    return element === GetSpanByFileListDiv(event.toElement);
+                })
+                if (idx > -1) SelectedItems.splice(idx, 1);
+            } else {
+                event.toElement.style.backgroundColor = "rgb(173, 222, 255)";
+                SelectedItems.push(GetSpanByFileListDiv(event.toElement));
+            } 
+    
+            isCtrlPressed = false;
+    
+        } else {
+            CancelAllSelection();
+    
             event.toElement.style.backgroundColor = "rgb(173, 222, 255)";
             SelectedItems.push(GetSpanByFileListDiv(event.toElement));
-        } 
-
-        isCtrlPressed = false;
-
-    } else {
-        CancelAllSelection();
-
-        event.toElement.style.backgroundColor = "rgb(173, 222, 255)";
-        SelectedItems.push(GetSpanByFileListDiv(event.toElement));
+        }
     }
 }
 
@@ -607,6 +644,13 @@ function CancelAllSelection() {
 
     for(let i = 0; i < list.length; i++){
         list[i].style.backgroundColor = 'unset';
+    }
+
+    if(isMobile){
+        LongPressState = false;
+        for(let i = 0; i < list.length; i++){
+            list[i].children[0].firstElementChild.src = 'images/ext/' + findExtImage(list[i].children[0].lastElementChild.dataset.ext);
+        }
     }
 }
 

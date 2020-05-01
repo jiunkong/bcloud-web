@@ -91,7 +91,6 @@ if (isTabletDevice()) {
 </div>
 `
     document.head.innerHTML += '<link rel="stylesheet" href="css/desktop.css">\n';
-    document.getElementById('import').innerHTML += '<script type="text/javascript" src="js/long-press-event.min.js"></script>\n';
 } else if (isMobileDevice()) {
     isMobile = true;
     document.getElementById('media-menu').innerHTML += `<input type="text" class="form-control" aria-label="Dir" aria-describedby="addon-wrapping" id="DirInput">
@@ -152,7 +151,6 @@ if (isTabletDevice()) {
     </div>
 `
     document.head.innerHTML += '<link rel="stylesheet" href="css/mobile.css">\n';
-    document.getElementById('import').innerHTML += '<script type="text/javascript" src="js/long-press-event.min.js"></script>\n';
 } else {
     isMobile = false;
     document.getElementById('media-menu').innerHTML += `<div class="input-group">

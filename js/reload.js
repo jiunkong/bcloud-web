@@ -29,21 +29,21 @@ function reloadFileList(){
                         for(let i = 0; i < json.dir.list.length; i++){
     
                             if (json.dir.list[i].ext === '') {
-                                folders += `<div class="FileList" onmousedown="onMouseDown();" onclick="onClick();" ondblclick="RaisedblClickOnGrandParent();">
-                                <div onclick="RaiseClickOnChild();" ondblclick="RaisedblClickOnParent();" class="notextover" onmousedown="RaiseMouseDownOnChild();">
-                                    <img src="images/ext/${findExtImage(json.dir.list[i].ext)}" width="40" height="40" onclick="RaiseClickOnGrandChild();" ondblclick="RaisedblClickOnSibling();" onmousedown="RaiseMouseDownOnGrandChild();">
-                                    <span onclick="RaiseClickOnGrandChild();" ondblclick="ondblClick();" onmousedown="RaiseMouseDownOnGrandChild();" data-ext="${json.dir.list[i].ext}">${json.dir.list[i].name}</span>
+                                folders += `<div class="FileList" onmousedown="onMouseDown();" onclick="onClick();" ondblclick="RaisedblClickOnGrandParent();" ontouchstart="TouchStart()" ontouchend="TouchEnd()" ontouchcancel="TouchEnd()">
+                                <div onclick="RaiseClickOnChild();" ondblclick="RaisedblClickOnParent();" class="notextover" onmousedown="RaiseMouseDownOnChild();" ontouchstart="RaiseTouchStartOnChild()" ontouchend="RaiseTouchEndOnChild()" ontouchcancel="RaiseTouchEndOnChild()">
+                                    <img src="images/ext/${findExtImage(json.dir.list[i].ext)}" width="40" height="40" onclick="RaiseClickOnGrandChild();" ondblclick="RaisedblClickOnSibling();" onmousedown="RaiseMouseDownOnGrandChild();" ontouchstart="RaiseTouchStartOnGrandChild()" ontouchend="RaiseTouchEndOnGrandChild()" ontouchcancel="RaiseTouchEndOnGrandChild()">
+                                    <span onclick="RaiseClickOnGrandChild();" ondblclick="ondblClick();" onmousedown="RaiseMouseDownOnGrandChild();" ontouchstart="RaiseTouchStartOnGrandChild()" ontouchend="RaiseTouchEndOnGrandChild()" ontouchcancel="RaiseTouchEndOnGrandChild()" data-ext="${json.dir.list[i].ext}">${json.dir.list[i].name}</span>
                                 </div>
                             </div>
                             `
                             } else {
-                                files.innerHTML += `<div class="FileList" onmousedown="onMouseDown();" onclick="onClick();" ondblclick="RaisedblClickOnGrandParent();">
-                                <div onclick="RaiseClickOnChild();" ondblclick="RaisedblClickOnParent();" class="notextover" onmousedown="RaiseMouseDownOnChild();">
-                                    <img src="images/ext/${findExtImage(json.dir.list[i].ext)}" width="40" height="40" onclick="RaiseClickOnGrandChild();" ondblclick="RaisedblClickOnSibling();" onmousedown="RaiseMouseDownOnGrandChild();">
-                                    <span onclick="RaiseClickOnGrandChild();" ondblclick="ondblClick();" onmousedown="RaiseMouseDownOnGrandChild();" data-ext="${json.dir.list[i].ext}">${json.dir.list[i].name}</span>
+                                files.innerHTML += `<div class="FileList" onmousedown="onMouseDown();" onclick="onClick();" ondblclick="RaisedblClickOnGrandParent();" ontouchstart="TouchStart()" ontouchend="TouchEnd()" ontouchcancel="TouchEnd()">
+                                <div onclick="RaiseClickOnChild();" ondblclick="RaisedblClickOnParent();" class="notextover" onmousedown="RaiseMouseDownOnChild();" ontouchstart="RaiseTouchStartOnChild()" ontouchend="RaiseTouchEndOnChild()" ontouchcancel="RaiseTouchEndOnChild()">
+                                    <img src="images/ext/${findExtImage(json.dir.list[i].ext)}" width="40" height="40" onclick="RaiseClickOnGrandChild();" ondblclick="RaisedblClickOnSibling();" onmousedown="RaiseMouseDownOnGrandChild();" ontouchstart="RaiseTouchStartOnGrandChild()" ontouchend="RaiseTouchEndOnGrandChild()" ontouchcancel="RaiseTouchEndOnGrandChild()">
+                                    <span onclick="RaiseClickOnGrandChild();" ondblclick="ondblClick();" onmousedown="RaiseMouseDownOnGrandChild();" ontouchstart="RaiseTouchStartOnGrandChild()" ontouchend="RaiseTouchEndOnGrandChild()" ontouchcancel="RaiseTouchEndOnGrandChild()" data-ext="${json.dir.list[i].ext}">${json.dir.list[i].name}</span>
                                 </div>
-                                <div style="flex: 1; display: inline-block; text-align: right; padding-right: 5px;" onclick="RaiseClickOnChild();" ondblclick="RaisedblClickOnParentSibling();" onmousedown="RaiseMouseDownOnChild();">
-                                    <span onclick="RaiseClickOnGrandChild();" ondblclick="RaisedblClickOnParentSiblingChild();" onmousedown="RaiseMouseDownOnGrandChild();">${json.dir.list[i].size}</span>
+                                <div style="flex: 1; display: inline-block; text-align: right; padding-right: 5px;" onclick="RaiseClickOnChild();" ondblclick="RaisedblClickOnParentSibling();" onmousedown="RaiseMouseDownOnChild();" ontouchstart="RaiseTouchStartOnChild()" ontouchend="RaiseTouchEndOnChild()" ontouchcancel="RaiseTouchEndOnChild()">
+                                    <span onclick="RaiseClickOnGrandChild();" ondblclick="RaisedblClickOnParentSiblingChild();" onmousedown="RaiseMouseDownOnGrandChild();" ontouchstart="RaiseTouchStartOnGrandChild()" ontouchend="RaiseTouchEndOnGrandChild()" ontouchcancel="RaiseTouchEndOnGrandChild()">${json.dir.list[i].size}</span>
                                 </div>
                             </div>
                             `

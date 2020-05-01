@@ -105,3 +105,35 @@ function RaiseMouseDownOnGrandChild() {
     target.dispatchEvent(custom);
     event.stopPropagation();
 }
+
+function RaiseTouchStartOnChild() {
+    let target = event.srcElement.parentElement;
+    let custom = document.createEvent("MouseEvents");
+    custom.initEvent("touchstart", true, true);
+    target.dispatchEvent(custom);
+    event.stopPropagation();
+}
+
+function RaiseTouchStartOnGrandChild() {
+    let target = event.srcElement.parentElement.parentElement;
+    let custom = document.createEvent("MouseEvents");
+    custom.initEvent("touchstart", true, true);
+    target.dispatchEvent(custom);
+    event.stopPropagation();
+}
+
+function RaiseTouchEndOnChild() {
+    let target = event.srcElement.parentElement;
+    let custom = document.createEvent("MouseEvents");
+    custom.initEvent("touchend", true, true);
+    target.dispatchEvent(custom);
+    event.stopPropagation();
+}
+
+function RaiseTouchEndOnGrandChild() {
+    let target = event.srcElement.parentElement.parentElement;
+    let custom = document.createEvent("MouseEvents");
+    custom.initEvent("touchend", true, true);
+    target.dispatchEvent(custom);
+    event.stopPropagation();
+}

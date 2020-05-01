@@ -3,6 +3,7 @@ let PreviousPage = new Stack(),
     Path = "/",
     cert = false,
     isNavOpen = false,
+    LongPressState = false,
     Session = '',
     Id = '',
     UploadCount = 0,
@@ -326,10 +327,16 @@ window.addEventListener('DOMContentLoaded', function(){
         }
     });
 
-    document.addEventListener("click", function(e) {
+    document.addEventListener("click", function() {
         showMenu(false);
         closeNav();
     })
+
+    if(isMobile){
+        document.addEventListener("long-press", function() {
+            console.log('long-press')
+        })
+    }
 
     document.addEventListener("keydown", function(){
         if(Number(event.keyCode) === 27){
@@ -362,6 +369,11 @@ window.addEventListener('DOMContentLoaded', function(){
 
         if(Number(event.keyCode) === 78 && event.shiftKey){
             openCreateFolderModal();
+        }
+
+        if(Number(event.keyCode) === 116){
+            clickReload();
+            event.preventDefault();
         }
     })
 

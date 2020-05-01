@@ -1,3 +1,5 @@
+let isMobile;
+
 function isMobileDevice() {
     let phoneArray = new Array('samsung-', 'sch-', 'shw-', 'sph-', 'sgh-', 'lg-', 'canu', 'im-', 'ev-', 'iphone', 'nokia', 'blackberry', 'lgtelecom', 'natebrowser', 'sonyericsson', 'mobile', 'android', 'ipad');
     for (i = 0; i < phoneArray.length; i++) { 
@@ -30,41 +32,42 @@ window.onpopstate = function () {
 };
 
 if (isTabletDevice()) {
+    isMobile = true;
     document.getElementById('media-menu').innerHTML += `<div class="input-group">
     <div class="input-group-prepend">
         <button class="input-group-text btn hm-btn" id="addon-wrapping">
-            <img src="images/home.png" height="20" width="20" onclick="clickHome();">
+            <img src="images/btn/home.png" height="20" width="20" onclick="clickHome();">
         </button>
     </div>
     <div class="input-group-prepend">
         <button class="input-group-text btn previous-btn" id="addon-wrapping">
-            <img src="images/left-arrow.png" height="20" width="20" onclick="clickPrevious();">
+            <img src="images/btn/left-arrow.png" height="20" width="20" onclick="clickPrevious();">
         </button>
     </div>
     <div class="input-group-prepend">
         <button class="input-group-text btn next-btn" id="addon-wrapping">
-            <img src="images/right-arrow.png" height="20" width="20" onclick="clickNext();">
+            <img src="images/btn/right-arrow.png" height="20" width="20" onclick="clickNext();">
         </button>
     </div>
     <input type="text" class="form-control" aria-label="Dir" aria-describedby="addon-wrapping" id="DirInput">
     <div class="input-group-prepend">
         <button class="input-group-text btn" id="addon-wrapping" onclick="clickCheck();">
-            <img src="images/check.png" height="20" width="20">
+            <img src="images/btn/check.png" height="20" width="20">
         </button>
     </div>
     <div class="input-group-prepend">
         <button class="input-group-text btn up-btn" id="addon-wrapping">
-            <img src="images/up-arrow.png" height="20" width="20" onclick="clickUp();">
+            <img src="images/btn/up-arrow.png" height="20" width="20" onclick="clickUp();">
         </button>
     </div>
     <div class="input-group-prepend">
         <button class="input-group-text btn" id="addon-wrapping">
-            <img src="images/reload.png" height="20" width="20" onclick="clickReload();">
+            <img src="images/btn/reload.png" height="20" width="20" onclick="clickReload();">
         </button>
     </div>
     <div class="dropdown input-group-prepend">
         <button class="btn input-group-text" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <img src="images/plus.png" height="20" width="20">
+            <img src="images/btn/plus.png" height="20" width="20">
         </button>
         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
             <a class="dropdown-item" onclick="openCreateFolderModal();">새 폴더</a>
@@ -73,7 +76,7 @@ if (isTabletDevice()) {
     </div>
     <div class="dropdown input-group-prepend">
         <button class="btn input-group-text" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" onclick="checkMenuDisable();">
-            <img src="images/menu.png" height="20" width="20">
+            <img src="images/btn/menu.png" height="20" width="20">
         </button>
         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
             <a class="dropdown-item mobilemenu-rename" onclick="openRenameModal();">이름 바꾸기</a>
@@ -88,42 +91,44 @@ if (isTabletDevice()) {
 </div>
 `
     document.head.innerHTML += '<link rel="stylesheet" href="css/desktop.css">\n';
+    document.getElementById('import').innerHTML += '<script type="text/javascript" src="js/long-press-event.min.js"></script>\n';
 } else if (isMobileDevice()) {
+    isMobile = true;
     document.getElementById('media-menu').innerHTML += `<input type="text" class="form-control" aria-label="Dir" aria-describedby="addon-wrapping" id="DirInput">
     <div class="input-group" style="display: flex;">
         <div class="input-group-prepend">
             <button class="input-group-text btn hm-btn" id="addon-wrapping">
-                <img src="images/home.png" height="20" width="20" onclick="clickHome();">
+                <img src="images/btn/home.png" height="20" width="20" onclick="clickHome();">
             </button>
         </div>
         <div class="input-group-prepend">
             <button class="input-group-text btn previous-btn" id="addon-wrapping">
-                <img src="images/left-arrow.png" height="20" width="20" onclick="clickPrevious();">
+                <img src="images/btn/left-arrow.png" height="20" width="20" onclick="clickPrevious();">
             </button>
         </div>
         <div class="input-group-prepend">
             <button class="input-group-text btn next-btn" id="addon-wrapping">
-                <img src="images/right-arrow.png" height="20" width="20" onclick="clickNext();">
+                <img src="images/btn/right-arrow.png" height="20" width="20" onclick="clickNext();">
             </button>
         </div>
         <div class="input-group-prepend">
             <button class="input-group-text btn" id="addon-wrapping" onclick="clickCheck();">
-                <img src="images/check.png" height="20" width="20">
+                <img src="images/btn/check.png" height="20" width="20">
             </button>
         </div>
         <div class="input-group-prepend">
             <button class="input-group-text btn up-btn" id="addon-wrapping">
-                <img src="images/up-arrow.png" height="20" width="20" onclick="clickUp();">
+                <img src="images/btn/up-arrow.png" height="20" width="20" onclick="clickUp();">
             </button>
         </div>
         <div class="input-group-prepend">
             <button class="input-group-text btn" id="addon-wrapping">
-                <img src="images/reload.png" height="20" width="20" onclick="clickReload();">
+                <img src="images/btn/reload.png" height="20" width="20" onclick="clickReload();">
             </button>
         </div>
         <div class="dropdown input-group-prepend">
             <button class="btn input-group-text" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <img src="images/plus.png" height="20" width="20">
+                <img src="images/btn/plus.png" height="20" width="20">
             </button>
             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
                 <a class="dropdown-item" onclick="openCreateFolderModal();">새 폴더</a>
@@ -132,7 +137,7 @@ if (isTabletDevice()) {
         </div>
         <div class="dropdown input-group-prepend">
             <button class="btn input-group-text" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" onclick="checkMenuDisable();">
-                <img src="images/menu.png" height="20" width="20">
+                <img src="images/btn/menu.png" height="20" width="20">
             </button>
             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
                 <a class="dropdown-item mobilemenu-rename" onclick="openRenameModal();">이름 바꾸기</a>
@@ -147,42 +152,44 @@ if (isTabletDevice()) {
     </div>
 `
     document.head.innerHTML += '<link rel="stylesheet" href="css/mobile.css">\n';
+    document.getElementById('import').innerHTML += '<script type="text/javascript" src="js/long-press-event.min.js"></script>\n';
 } else {
+    isMobile = false;
     document.getElementById('media-menu').innerHTML += `<div class="input-group">
     <div class="input-group-prepend">
         <button class="input-group-text btn hm-btn" id="addon-wrapping">
-            <img src="images/home.png" height="20" width="20" onclick="clickHome();">
+            <img src="images/btn/home.png" height="20" width="20" onclick="clickHome();">
         </button>
     </div>
     <div class="input-group-prepend">
         <button class="input-group-text btn previous-btn" id="addon-wrapping">
-            <img src="images/left-arrow.png" height="20" width="20" onclick="clickPrevious();">
+            <img src="images/btn/left-arrow.png" height="20" width="20" onclick="clickPrevious();">
         </button>
     </div>
     <div class="input-group-prepend">
         <button class="input-group-text btn next-btn" id="addon-wrapping">
-            <img src="images/right-arrow.png" height="20" width="20" onclick="clickNext();">
+            <img src="images/btn/right-arrow.png" height="20" width="20" onclick="clickNext();">
         </button>
     </div>
     <input type="text" class="form-control" aria-label="Dir" aria-describedby="addon-wrapping" id="DirInput">
     <div class="input-group-prepend">
         <button class="input-group-text btn" id="addon-wrapping" onclick="clickCheck();">
-            <img src="images/check.png" height="20" width="20">
+            <img src="images/btn/check.png" height="20" width="20">
         </button>
     </div>
     <div class="input-group-prepend">
         <button class="input-group-text btn up-btn" id="addon-wrapping">
-            <img src="images/up-arrow.png" height="20" width="20" onclick="clickUp();">
+            <img src="images/btn/up-arrow.png" height="20" width="20" onclick="clickUp();">
         </button>
     </div>
     <div class="input-group-prepend">
         <button class="input-group-text btn" id="addon-wrapping">
-            <img src="images/reload.png" height="20" width="20" onclick="clickReload();">
+            <img src="images/btn/reload.png" height="20" width="20" onclick="clickReload();">
         </button>
     </div>
     <div class="dropdown input-group-prepend">
         <button class="btn input-group-text" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <img src="images/plus.png" height="20" width="20">
+            <img src="images/btn/plus.png" height="20" width="20">
         </button>
         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
             <a class="dropdown-item" onclick="openCreateFolderModal();">새 폴더</a>

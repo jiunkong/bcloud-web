@@ -42,9 +42,10 @@
                             <span id="Volume-Used">0</span>GB / <span id="Volume-Total">0</span>GB
                         </span>
                     </div>
-                    <a class="navText" onclick="openUploadProgressModal()">Uploads</a>
-                    <a class="navText" href="#">비밀번호 변경</a>
-                    <a class="navText" href="#">Contact</a>
+                    <a class="navText navClick" onclick="openUploadProgressModal()">Uploads</a>
+                    <a class="navText navClick" href="#">비밀번호 변경</a>
+                    <a class="navText navClick" href="#">Contact</a>
+                    <a class="navSmallText navLogout" onclick="clickLogout()">Logout</a>
                 </div>
                 <div class="TextAlignCenter">
                     <div id="NavMenu_Out">
@@ -174,7 +175,7 @@
 
                         <!-- Upload Progress Modal -->
                         <button type="button" class="btn btn-primary" id="openUploadProgressModal" data-toggle="modal" data-target="#UploadProgressModal" style="display: none;"></button>
-                        <div class="modal fade" id="UploadProgressModal" tabindex="-1" role="dialog" aria-labelledby="UploadProgressModalTitle" aria-hidden="true">
+                        <div class="modal fade" id="UploadProgressModal" tabindex="-1" role="dialog" aria-labelledby="UploadProgressModalTitle" aria-hidden="true" onkeydown="if(Number(event.keyCode) === 13) $('#UploadProgressModal').modal('hide');">
                             <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
@@ -193,6 +194,28 @@
                             </div>
                         </div>
 
+                        <!-- Logout Modal -->
+                        <button type="button" class="btn btn-primary" id="openLogoutModal" data-toggle="modal" data-target="#LogoutModal" style="display: none;"></button>
+                        <div class="modal fade" id="LogoutModal" tabindex="-1" role="dialog" aria-labelledby="LogoutModalTitle" aria-hidden="true" onkeydown="if(Number(event.keyCode) === 13) LogoutSave();">
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="LogoutModalCenterTitle">Logout</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p style="text-align: center; margin-top: 16px; font-size: 1.2rem;">로그아웃 하시겠습니까?</p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
+                                        <button type="button" class="btn btn-primary" onclick="LogoutSave();">확인</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                         <div id="Files">
                             
                         </div>
@@ -202,6 +225,7 @@
         </section>
         <div id="import">
             <script type="text/javascript" src="js/check.js"></script>
+
         </div>
     </body>
 </html>

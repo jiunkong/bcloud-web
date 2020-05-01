@@ -321,3 +321,9 @@ async function clickShare() {
         })
     })();
 }
+
+function clickLogout() {
+    let custom = document.createEvent("MouseEvents");
+    custom.initEvent("click", true, true);
+    document.getElementById('openLogoutModal').dispatchEvent(custom);
+}

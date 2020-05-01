@@ -275,3 +275,8 @@ function getTimeRemaining(percent, start) {
         return `${__seconds}초 남음`;
     }
 }
+
+function LogoutSave() {
+    $('#LogoutModal').modal('hide');
+    window.location.href = 'index.html';
+}

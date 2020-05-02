@@ -12,6 +12,7 @@ let PreviousPage = new Stack(),
     isCtrlPressed = false,
     MenuTarget,
     delay,
+    isOpenNav = false,
     CutItems = new Array();
 
 const PressTime = 1000;
@@ -340,48 +341,65 @@ window.addEventListener('DOMContentLoaded', function(){
         closeNav();
     })
 
-    document.addEventListener("keydown", function(){
-        if(Number(event.keyCode) === 27){
-            cancelAllItemCut();
-        }
-
-        if(Number(event.keyCode) === 46){
-            openRemoveModal();
-        }
-
-        if(Number(event.keyCode) === 113){
-            openRenameModal();
-        }
-
-        if(Number(event.keyCode) === 88 && event.ctrlKey){
-            clickItemCut();
-        }
-
-        if(Number(event.keyCode) === 86 && event.ctrlKey){
-            clickItemPaste();
-        }
-
-        if(Number(event.keyCode) === 81 && event.ctrlKey){
-            clickLogout();
-        }
-
-        if(Number(event.keyCode) === 76 && event.shiftKey){
-            openUploadProgressModal();
-        }
-
-        if(Number(event.keyCode) === 85 && event.shiftKey){
-            RaiseFileInputClick();
-        }
-
-        if(Number(event.keyCode) === 78 && event.shiftKey){
-            openCreateFolderModal();
-        }
-
-        if(Number(event.keyCode) === 116){
-            clickReload();
-            event.preventDefault();
-        }
-    })
+    if (!isMobile) {
+        document.addEventListener("keydown", function(){
+            if(Number(event.keyCode) === 27){
+                cancelAllItemCut();
+            }
+    
+            if(Number(event.keyCode) === 46){
+                openRemoveModal();
+            }
+    
+            if(Number(event.keyCode) === 113){
+                openRenameModal();
+            }
+    
+            if(Number(event.keyCode) === 88 && event.ctrlKey){
+                clickItemCut();
+            }
+    
+            if(Number(event.keyCode) === 86 && event.ctrlKey){
+                clickItemPaste();
+            }
+    
+            if(Number(event.keyCode) === 81 && event.ctrlKey){
+                clickLogout();
+            }
+    
+            if(Number(event.keyCode) === 76 && event.shiftKey){
+                openUploadProgressModal();
+            }
+    
+            if(Number(event.keyCode) === 85 && event.shiftKey){
+                RaiseFileInputClick();
+            }
+    
+            if(Number(event.keyCode) === 78 && event.shiftKey){
+                openCreateFolderModal();
+            }
+    
+            if(Number(event.keyCode) === 83 && event.shiftKey){
+                openKeyboardShortCutsModal();
+            }
+    
+            if(Number(event.keyCode) === 116){
+                clickReload();
+                event.preventDefault();
+            }
+    
+            if(Number(event.keyCode) === 9){
+                if (isOpenNav) {
+                    closeNav();
+                    isOpenNav = false;
+                } else {
+                    openNav();
+                    isOpenNav = true;
+                }
+                event.preventDefault();
+            }
+        })
+    }
 
     $("[data-toggle='tooltip']").tooltip();
 
@@ -433,11 +451,13 @@ function onBackKeyDown() {
 function openNav(){
     if (!cert) return;
     document.getElementById("mySidenav").style.width = "300px";
+    isOpenNav = true;
     event.stopPropagation();
 }
   
 function closeNav(){
     document.getElementById("mySidenav").style.width = "0";
+    isOpenNav = false;
 }
 
 function checkDisable(){

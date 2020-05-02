@@ -43,6 +43,7 @@
                         </span>
                     </div>
                     <a class="navText navClick" onclick="openUploadProgressModal()">Uploads</a>
+                    <a class="navText navClick" onclick="openKeyboardShortCutsModal()" id="openKeyboardShortCutsModalTag">단축키</a>
                     <a class="navText navClick" onclick="openChangePasswordModal()">비밀번호 변경</a>
                     <a class="navText navClick" href="mailto:bukgeuk1234@gmail.com">Contact</a>
                     <a class="navSmallText navLogout" onclick="clickLogout()">Logout</a>
@@ -216,7 +217,7 @@
                             </div>
                         </div>
 
-                        <!-- changePassword Modal -->
+                        <!-- ChangePassword Modal -->
                         <button type="button" class="btn btn-primary" id="openChangePasswordModal" data-toggle="modal" data-target="#ChangePasswordModal" style="display: none;"></button>
                         <div class="modal fade" id="ChangePasswordModal" tabindex="-1" role="dialog" aria-labelledby="ChangePasswordModalTitle" aria-hidden="true">
                             <div class="modal-dialog modal-dialog-centered" role="document">
@@ -247,23 +248,39 @@
                             </div>
                         </div>
 
-                        <!-- Logout Modal -->
-                        <button type="button" class="btn btn-primary" id="openLogoutModal" data-toggle="modal" data-target="#LogoutModal" style="display: none;"></button>
-                        <div class="modal fade" id="LogoutModal" tabindex="-1" role="dialog" aria-labelledby="LogoutModalTitle" aria-hidden="true" onkeydown="if(Number(event.keyCode) === 13) LogoutSave();">
-                            <div class="modal-dialog modal-dialog-centered" role="document">
+                        <!-- Keyboard ShortCuts Modal -->
+                        <button type="button" class="btn btn-primary" id="openKeyboardShortCutsModal" data-toggle="modal" data-target="#KeyboardShortCutsModal" style="display: none;"></button>
+                        <div class="modal fade" id="KeyboardShortCutsModal" tabindex="-1" role="dialog" aria-labelledby="KeyboardShortCutsModalTitle" aria-hidden="true" onkeydown="if(Number(event.keyCode) === 13) $('#KeyboardShortCutsModal').modal('hide');">
+                            <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h5 class="modal-title" id="LogoutModalCenterTitle">Logout</h5>
+                                        <h5 class="modal-title" id="KeyboardShortCutsModalCenterTitle">단축키</h5>
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                             <span aria-hidden="true">&times;</span>
                                         </button>
                                     </div>
                                     <div class="modal-body">
-                                        <p style="text-align: center; margin-top: 16px; font-size: 1.2rem;">로그아웃 하시겠습니까?</p>
+                                        <div class="shortcut-box">
+                                            <p>메뉴 열기/닫기 : Tab</p>
+                                            <p>취소/닫기 : Esc</p>
+                                            <p>파일 삭제 : Delete</p>
+                                            <p>파일 이름 변경 : F2</p>
+                                        </div>
+                                        <div class="shortcut-box">
+                                            <p>파일 목록 로딩 : F5</p>
+                                            <p>잘라내기 : Ctrl + X</p>
+                                            <p>붙여넣기 : Ctrl + V</p>
+                                            <p>로그아웃 : Ctrl + Q</p>
+                                        </div>
+                                        <div class="shortcut-box">
+                                            <p>업로드 열기 : Shift + L</p>
+                                            <p>업로드 : Shift + U</p>
+                                            <p>폴더 생성 : Shift + N</p>
+                                            <p>단축키 열기 : Shift + S</p>
+                                        </div>
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
-                                        <button type="button" class="btn btn-primary" onclick="LogoutSave();">확인</button>
+                                        <button type="button" class="btn btn-primary" data-dismiss="modal">확인</button>
                                     </div>
                                 </div>
                             </div>

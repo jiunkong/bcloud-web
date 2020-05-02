@@ -118,7 +118,13 @@
     width: 60px;
     text-align: right;
 }
-  
+.shortcut-box {
+    display: inline-block;
+    width: calc((100% - 32px) / 3);
+    font-size: 1.1rem;
+    padding: 30px 0 30px 80px;
+}
+
 @media screen and (max-height: 450px) {
     .sidenav {padding-top: 15px;}
     .sidenav a {font-size: 18px;}

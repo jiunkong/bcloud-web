@@ -33,6 +33,7 @@ window.onpopstate = function () {
 
 if (isTabletDevice()) {
     isMobile = true;
+    document.getElementById('openKeyboardShortCutsModalTag').remove();
     document.getElementById('media-menu').innerHTML += `<div class="input-group">
     <div class="input-group-prepend">
         <button class="input-group-text btn hm-btn" id="addon-wrapping">
@@ -93,6 +94,7 @@ if (isTabletDevice()) {
     document.head.innerHTML += '<link rel="stylesheet" href="css/desktop.css">\n';
 } else if (isMobileDevice()) {
     isMobile = true;
+    document.getElementById('openKeyboardShortCutsModalTag').remove();
     document.getElementById('media-menu').innerHTML += `<input type="text" class="form-control" aria-label="Dir" aria-describedby="addon-wrapping" id="DirInput">
     <div class="input-group" style="display: flex;">
         <div class="input-group-prepend">

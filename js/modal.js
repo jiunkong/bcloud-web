@@ -297,3 +297,9 @@ function openChangePasswordModal() {
     custom.initEvent("click", true, true);
     document.getElementById('openChangePasswordModal').dispatchEvent(custom);
 }
+
+function openKeyboardShortCutsModal() {
+    let custom = document.createEvent("MouseEvents");
+    custom.initEvent("click", true, true);
+    document.getElementById('openKeyboardShortCutsModal').dispatchEvent(custom);
+} 

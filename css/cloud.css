@@ -124,6 +124,13 @@
     font-size: 1.1rem;
     padding: 30px 0 30px 80px;
 }
+#FileListView {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+}
+#FileListView::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera*/
+}
 
 @media screen and (max-height: 450px) {
     .sidenav {padding-top: 15px;}

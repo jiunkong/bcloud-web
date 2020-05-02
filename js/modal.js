@@ -30,9 +30,15 @@ function renameSave() {
 
     if (input.value === target.innerText.substr(0, target.innerText.length - target.dataset.ext.length)) return;
 
-    if(input.value.indexOf('/') !== -1){
+    if (input.value.indexOf('/') !== -1) {
         toastr.error('파일 이름에 /를 사용할 수 없습니다');
         showLoading(false);
+        return;
+    } else if (input.value.indexOf('<') !== -1) {
+        toastr.error('파일 이름에 <를 사용할 수 없습니다');
+        return;
+    } else if (input.value.indexOf('>') !== -1) {
+        toastr.error('파일 이름에 >를 사용할 수 없습니다');
         return;
     }
 

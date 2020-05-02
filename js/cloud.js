@@ -101,8 +101,14 @@ function uploadFile(){
     }
 
     for(let i = 0; i < fileList.length; i++){
-        if(fileList[i].name.indexOf() !== -1){
+        if (fileList[i].name.indexOf('/') !== -1) {
             toastr.error('파일 이름에 /를 사용할 수 없습니다');
+            return;
+        } else if (fileList[i].name.indexOf('<') !== -1) {
+            toastr.error('파일 이름에 <를 사용할 수 없습니다');
+            return;
+        } else if (fileList[i].name.indexOf('>') !== -1) {
+            toastr.error('파일 이름에 >를 사용할 수 없습니다');
             return;
         }
     }

@@ -5,7 +5,11 @@ function RaiseClickOnChild() {
     if (event.ctrlKey) isCtrlPressed = true;
     else isCtrlPressed = false;
 
-    let target = event.toElement.parentElement;
+    if (!CRS) {
+        var target = event.toElement.parentElement;
+    } else {
+        var target = event.currentTarget.parentElement;
+    }
     let custom = document.createEvent("MouseEvents");
     custom.initEvent("click", true, true);
     target.dispatchEvent(custom);
@@ -19,7 +23,11 @@ function RaiseClickOnGrandChild() {
     if (event.ctrlKey) isCtrlPressed = true;
     else isCtrlPressed = false;
 
-    let target = event.toElement.parentElement.parentElement;
+    if (!CRS) {
+        var target = event.toElement.parentElement.parentElement;
+    } else {
+        var target = event.currentTarget.parentElement.parentElement;
+    }
     let custom = document.createEvent("MouseEvents");
     custom.initEvent("click", true, true);
     target.dispatchEvent(custom);
@@ -27,31 +35,51 @@ function RaiseClickOnGrandChild() {
 }
 
 function RaisedblClickOnGrandParent() {
-    let target = event.toElement.children[0].lastElementChild;
+    if (!CRS) {
+        var target = event.toElement.children[0].lastElementChild;
+    } else {
+        var target = event.currentTarget.children[0].lastElementChild;
+    }
     target.dispatchEvent(new Event('dblclick'));
     event.stopPropagation();
 }
 
 function RaisedblClickOnParent() {
-    let target = event.toElement.lastElementChild;
+    if (!CRS) {
+        var target = event.toElement.lastElementChild;
+    } else {
+        var target = event.currentTarget.lastElementChild;
+    }
     target.dispatchEvent(new Event('dblclick'));
     event.stopPropagation();
 }
 
 function RaisedblClickOnSibling() {
-    let target = event.toElement.nextElementSibling;
+    if (!CRS) {
+        var target = event.toElement.nextElementSibling;
+    } else {
+        var target = event.currentTarget.nextElementSibling;
+    }
     target.dispatchEvent(new Event('dblclick'));
     event.stopPropagation();
 }
 
 function RaisedblClickOnParentSibling() {
-    let target = event.toElement.previousElementSibling.lastElementChild;
+    if (!CRS) {
+        var target = event.toElement.previousElementSibling.lastElementChild;
+    } else {
+        var target = event.currentTarget.previousElementSibling.lastElementChild;
+    }
     target.dispatchEvent(new Event('dblclick'));
     event.stopPropagation();
 }
 
 function RaisedblClickOnParentSiblingChild() {
-    let target = event.toElement.parentElement.previousElementSibling.lastElementChild;
+    if (!CRS) {
+        var target = event.toElement.parentElement.previousElementSibling.lastElementChild;
+    } else {
+        var target = event.currentTarget.parentElement.previousElementSibling.lastElementChild;
+    }
     target.dispatchEvent(new Event('dblclick'));
     event.stopPropagation();
 }
@@ -73,7 +101,11 @@ function RaiseFileInputClick() {
 }
 
 function RaiseMouseDownOnChild() {
-    let target = event.toElement.parentElement;
+    if (!CRS) {
+        var target = event.toElement.parentElement;
+    } else {
+        var target = event.currentTarget.parentElement;
+    }
 
     let opt = {
         bubbles: true,
@@ -90,7 +122,11 @@ function RaiseMouseDownOnChild() {
 }
 
 function RaiseMouseDownOnGrandChild() {
-    let target = event.toElement.parentElement.parentElement;
+    if (!CRS) {
+        var target = event.toElement.parentElement.parentElement;
+    } else {
+        var target = event.currentTarget.parentElement.parentElement;
+    }
 
     let opt = {
         bubbles: true,

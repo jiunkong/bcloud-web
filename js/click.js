@@ -215,6 +215,7 @@ async function clickItemPaste() {
         })();
     }
 
+    CutItems = new Array();
     reloadFileList().then(() => {
         checkItemCut();
         showLoading(false);

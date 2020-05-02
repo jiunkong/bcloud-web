@@ -523,6 +523,7 @@ function onMouseDown() {
 }
 
 function TouchStart() {
+    if (LongPressState) return;
     delay = setTimeout(EnterLongPressState, PressTime, event);
 }
 

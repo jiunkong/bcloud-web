@@ -365,6 +365,10 @@ window.addEventListener('DOMContentLoaded', function(){
             if(Number(event.keyCode) === 86 && event.ctrlKey){
                 clickItemPaste();
             }
+
+            if(Number(event.keyCode) === 65 && event.ctrlKey){
+                SelectAll();
+            }
     
             if(Number(event.keyCode) === 81 && event.shiftKey){
                 clickLogout();
@@ -539,6 +543,15 @@ function EnterLongPressState(event) {
     event.srcElement.children[0].firstElementChild.src = 'images/select.png';
     if (!CRS) SelectedItems.push(GetSpanByFileListDiv(event.toElement));
     else SelectedItems.push(GetSpanByFileListDiv(event.currentTarget));
+}
+
+function SelectAll() {
+    let Files = document.getElementById('Files');
+
+    for(let i = 0; i < Files.children.length; i++){
+        Files.children[i].style.backgroundColor = "rgb(173, 222, 255)";
+        SelectedItems.push(Files.children[i]);
+    }
 }
 
 function onClick() { 

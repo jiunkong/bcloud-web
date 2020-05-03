@@ -1,4 +1,4 @@
-let isMobile;
+let isMobile, allowShortcut;
 
 function isMobileDevice() {
     let phoneArray = new Array('samsung-', 'sch-', 'shw-', 'sph-', 'sgh-', 'lg-', 'canu', 'im-', 'ev-', 'iphone', 'nokia', 'blackberry', 'lgtelecom', 'natebrowser', 'sonyericsson', 'mobile', 'android', 'ipad');
@@ -33,6 +33,7 @@ window.onpopstate = function () {
 
 if (isTabletDevice()) {
     isMobile = true;
+    allowShortcut = true;
     document.getElementById('openKeyboardShortCutsModalTag').remove();
     document.getElementById('media-menu').innerHTML += `<div class="input-group">
     <div class="input-group-prepend">
@@ -94,6 +95,7 @@ if (isTabletDevice()) {
     document.head.innerHTML += '<link rel="stylesheet" href="css/desktop.css">\n';
 } else if (isMobileDevice()) {
     isMobile = true;
+    allowShortcut = false;
     document.getElementById('openKeyboardShortCutsModalTag').remove();
     document.getElementById('media-menu').innerHTML += `<input type="text" class="form-control" aria-label="Dir" aria-describedby="addon-wrapping" id="DirInput">
     <div class="input-group" style="display: flex;">
@@ -155,6 +157,7 @@ if (isTabletDevice()) {
     document.head.innerHTML += '<link rel="stylesheet" href="css/mobile.css">\n';
 } else {
     isMobile = false;
+    allowShortcut = true;
     document.getElementById('media-menu').innerHTML += `<div class="input-group">
     <div class="input-group-prepend">
         <button class="input-group-text btn hm-btn" id="addon-wrapping">

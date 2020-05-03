@@ -344,7 +344,7 @@ window.addEventListener('DOMContentLoaded', function(){
         closeNav();
     })
 
-    if (!isMobile) {
+    if (allowShortcut) {
         document.addEventListener("keydown", function(){
             if(Number(event.keyCode) === 27){
                 cancelAllItemCut();

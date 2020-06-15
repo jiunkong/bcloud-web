@@ -32,6 +32,17 @@ function findExtImage(ext) {
         case 'gz':
         case 'bat':
         case 'ico':
+        case 'dll':
+        case 'ini':
+        case 'log':
+        case 'ttf':
+        case 'otf':
+        case 'prproj':
+        case 'aep':
+        case 'java':
+        case 'cpp':
+        case 'cs':
+        case 'py':
             return (ext + '.png');
         case 'htm':
             return 'html.png';

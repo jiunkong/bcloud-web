@@ -1,7 +1,7 @@
 function reloadFileList(){
     return new Promise(function(resolve, reject){
         $.ajax({
-            url : "https://raw.cloud.bukgeuk.dev:3000/dir",
+            url : "https://rawcloud.bukgeuk.dev:2083/dir",
             method : "POST",
             data : {
                 dir : Path,
@@ -82,7 +82,7 @@ function reloadFileList(){
 function reloadVolume(){
     return new Promise(function(resolve, reject){
         $.ajax({
-            url : "https://raw.cloud.bukgeuk.dev:3000/disk",
+            url : "https://rawcloud.bukgeuk.dev:2083/disk",
             data : {
                 id : Id,
                 key : Session

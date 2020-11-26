@@ -119,7 +119,7 @@ function uploadFile(){
 
     if (fileList.length === 1) {
         $.ajax({
-            url:"https://raw.cloud.bukgeuk.dev:3000/beforeupload",
+            url:"https://rawcloud.bukgeuk.dev:2083/beforeupload",
             data : {
                 id : Id,
                 key : Session,
@@ -145,7 +145,7 @@ function uploadFile(){
                     toastr.info('파일 업로드 시작<br><a onclick="openUploadProgressModal()" >[업로드 보기]</a>');
 
                     $.ajax({
-                        url:"https://raw.cloud.bukgeuk.dev:3000/uploadsingle",
+                        url:"https://rawcloud.bukgeuk.dev:2083/uploadsingle",
                         data : formData,
                         type : 'POST',
                         enctype : 'multipart/form-data',
@@ -222,7 +222,7 @@ function uploadFile(){
         }
 
         $.ajax({
-            url:"https://raw.cloud.bukgeuk.dev:3000/beforeupload",
+            url:"https://rawcloud.bukgeuk.dev:2083/beforeupload",
             data : {
                 id : Id,
                 key : Session,
@@ -250,7 +250,7 @@ function uploadFile(){
                     toastr.info('파일 업로드 시작<br><a onclick="openUploadProgressModal()" >[업로드 보기]</a>');
 
                     $.ajax({
-                        url:"https://raw.cloud.bukgeuk.dev:3000/uploadmultiple",
+                        url:"https://rawcloud.bukgeuk.dev:2083/uploadmultiple",
                         data : formData,
                         type : 'POST',
                         enctype : 'multipart/form-data',
@@ -413,7 +413,7 @@ window.addEventListener('DOMContentLoaded', function(){
     document.addEventListener("deviceready", onDeviceReady, false);
 
     $.ajax({
-        url : "https://raw.cloud.bukgeuk.dev:3000/checksession",
+        url : "https://rawcloud.bukgeuk.dev:2083/checksession",
         data : {
             key : getQueryString().session
         },

@@ -193,7 +193,7 @@ async function clickItemPaste() {
         await (function(){
             return new Promise(function(resolve, reject){
                 $.ajax({
-                    url : "https://raw.cloud.bukgeuk.dev:3000/changedir",
+                    url : "https://rawcloud.bukgeuk.dev:2083/changedir",
                     data : {
                         id : Id,
                         key : Session,
@@ -230,7 +230,7 @@ async function clickDownload() {
             await (function(){
                 return new Promise(function(resolve, reject){
                     $.ajax({
-                        url : "https://raw.cloud.bukgeuk.dev:3000/download",
+                        url : "https://rawcloud.bukgeuk.dev:2083/download",
                         data : {
                             id : Id,
                             key : Session,
@@ -243,7 +243,7 @@ async function clickDownload() {
                                 Session = json.session.key;
                                 let downloadSession = json.downloadSession.key;
             
-                                window.open(`https://raw.cloud.bukgeuk.dev:3000/download?file=${downloadSession}`, `Download - ${SelectedItems_Backup[i].innerText}`);
+                                window.open(`https://rawcloud.bukgeuk.dev:2083/download?file=${downloadSession}`, `Download - ${SelectedItems_Backup[i].innerText}`);
 
                                 resolve();
                             } else {
@@ -260,7 +260,7 @@ async function clickDownload() {
         let target = MenuTarget.children[0].lastElementChild;
         toastr.info('파일 다운로드 시작');
         $.ajax({
-            url : "https://raw.cloud.bukgeuk.dev:3000/download",
+            url : "https://rawcloud.bukgeuk.dev:2083/download",
             data : {
                 id : Id,
                 key : Session,
@@ -273,7 +273,7 @@ async function clickDownload() {
                     Session = json.session.key;
                     let downloadSession = json.downloadSession.key;
 
-                    window.open(`https://raw.cloud.bukgeuk.dev:3000/download?file=${downloadSession}`, `Download - ${target.innerText}`);
+                    window.open(`https://rawcloud.bukgeuk.dev:2083/download?file=${downloadSession}`, `Download - ${target.innerText}`);
                 } else {
                     toastr.error(`${SelectedItems[i].innerText} 다운로드 실패`);
                 }
@@ -292,7 +292,7 @@ async function clickShare() {
     await (function(){
         return new Promise(function(resolve, reject){
             $.ajax({
-                url : "https://raw.cloud.bukgeuk.dev:3000/share",
+                url : "https://rawcloud.bukgeuk.dev:2083/share",
                 data : {
                     id : Id,
                     key : Session,
@@ -306,7 +306,7 @@ async function clickShare() {
 
                         let dummy = document.createElement("textarea");
                         document.body.appendChild(dummy);
-                        dummy.value = `https://raw.cloud.bukgeuk.dev:3000/share?file=${json.share.key}`;
+                        dummy.value = `https://rawcloud.bukgeuk.dev:2083/share?file=${json.share.key}`;
                         dummy.select();
                         document.execCommand("copy");
                         document.body.removeChild(dummy);

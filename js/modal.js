@@ -15,6 +15,8 @@ function openRenameModal() {
     let custom = document.createEvent("MouseEvents");
     custom.initEvent("click", true, true);
     document.getElementById('openRenameModal').dispatchEvent(custom);
+
+    isOpenModal = true;
 }
 
 function renameSave() {
@@ -69,6 +71,7 @@ function renameSave() {
                 $('#RenameModal').modal('hide');
                 toastr.error('이름 변경 실패');
             }
+            isOpenModal = false;
         }
     })
 }
@@ -81,6 +84,8 @@ function openCreateFolderModal() {
     let custom = document.createEvent("MouseEvents");
     custom.initEvent("click", true, true);
     document.getElementById('openCreateFolderModal').dispatchEvent(custom);
+
+    isOpenModal = true;
 }
 
 function createFolderSave() {
@@ -117,6 +122,7 @@ function createFolderSave() {
                 $('#CreateFolderModal').modal('hide');
                 toastr.error('폴더 생성 실패');
             }
+            isOpenModal = false;
         }
     })
 }
@@ -154,6 +160,8 @@ function openRemoveModal() {
     let custom = document.createEvent("MouseEvents");
     custom.initEvent("click", true, true);
     document.getElementById('openRemoveModal').dispatchEvent(custom);
+
+    isOpenModal = true;
 }
 
 function removeSave() {
@@ -186,6 +194,7 @@ function removeSave() {
                         $('#RemoveModal').modal('hide');
                         toastr.error('파일 삭제 실패');
                     }
+                    isOpenModal = false;
                 }
             })
         } else {
@@ -218,6 +227,7 @@ function removeSave() {
                         $('#RemoveModal').modal('hide');
                         toastr.error('파일 삭제 실패');
                     }
+                    isOpenModal = false;
                 }
             })
         }
@@ -252,6 +262,7 @@ function removeSave() {
                     $('#RemoveModal').modal('hide');
                     toastr.error('파일 삭제 실패');
                 }
+                isOpenModal = false;
             }
         })
     } else return;
@@ -261,6 +272,8 @@ function openUploadProgressModal() {
     let custom = document.createEvent("MouseEvents");
     custom.initEvent("click", true, true);
     document.getElementById('openUploadProgressModal').dispatchEvent(custom);
+
+    isOpenModal = true;
 }
 
 function getTimeRemaining(percent, start) {
@@ -284,6 +297,7 @@ function getTimeRemaining(percent, start) {
 
 function LogoutSave() {
     $('#LogoutModal').modal('hide');
+
     window.location.href = 'index.html';
 }
 
@@ -296,6 +310,8 @@ function openChangePasswordModal() {
     let custom = document.createEvent("MouseEvents");
     custom.initEvent("click", true, true);
     document.getElementById('openChangePasswordModal').dispatchEvent(custom);
+
+    isOpenModal = true;
 }
 
 function openKeyboardShortCutsModal() {

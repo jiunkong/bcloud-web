@@ -14,6 +14,7 @@ let PreviousPage = new Stack(),
     delay,
     isOpenNav = false,
     CRS = (getQueryString().crs === 'true' ? true : false),
+    isOpenModal = false,
     CutItems = new Array();
 
 const PressTime = 1000;
@@ -350,52 +351,52 @@ window.addEventListener('DOMContentLoaded', function(){
                 cancelAllItemCut();
             }
     
-            if(Number(event.keyCode) === 46){
+            if(Number(event.keyCode) === 46 && !isOpenModal){
                 openRemoveModal();
             }
     
-            if(Number(event.keyCode) === 113){
+            if(Number(event.keyCode) === 113 && !isOpenModal){
                 openRenameModal();
             }
     
-            if(Number(event.keyCode) === 88 && event.ctrlKey){
+            if(Number(event.keyCode) === 88 && event.ctrlKey && !isOpenModal){
                 clickItemCut();
             }
     
-            if(Number(event.keyCode) === 86 && event.ctrlKey){
+            if(Number(event.keyCode) === 86 && event.ctrlKey && !isOpenModal){
                 clickItemPaste();
             }
 
-            if(Number(event.keyCode) === 65 && event.ctrlKey){
+            if(Number(event.keyCode) === 65 && event.ctrlKey && !isOpenModal){
                 SelectAll();
             }
     
-            if(Number(event.keyCode) === 81 && event.shiftKey){
+            if(Number(event.keyCode) === 81 && event.shiftKey && !isOpenModal){
                 clickLogout();
             }
     
-            if(Number(event.keyCode) === 76 && event.shiftKey){
+            if(Number(event.keyCode) === 76 && event.shiftKey && !isOpenModal){
                 openUploadProgressModal();
             }
     
-            if(Number(event.keyCode) === 85 && event.shiftKey){
+            if(Number(event.keyCode) === 85 && event.shiftKey && !isOpenModal){
                 RaiseFileInputClick();
             }
     
-            if(Number(event.keyCode) === 78 && event.shiftKey){
+            if(Number(event.keyCode) === 78 && event.shiftKey && !isOpenModal){
                 openCreateFolderModal();
             }
     
-            if(Number(event.keyCode) === 83 && event.shiftKey){
+            if(Number(event.keyCode) === 83 && event.shiftKey && !isOpenModal){
                 openKeyboardShortCutsModal();
             }
     
-            if(Number(event.keyCode) === 116 || (Number(event.keyCode) === 82 && event.ctrlKey)){
+            if((Number(event.keyCode) === 116 || (Number(event.keyCode) === 82 && event.ctrlKey)) && !isOpenModal){
                 clickReload();
                 event.preventDefault();
             }
     
-            if(Number(event.keyCode) === 9){
+            if(Number(event.keyCode) === 9 && !isOpenModal){
                 if (isOpenNav) {
                     closeNav();
                     isOpenNav = false;

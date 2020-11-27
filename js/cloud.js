@@ -345,6 +345,18 @@ window.addEventListener('DOMContentLoaded', function(){
         closeNav();
     })
 
+    $('#RenameModal').on('hidden.bs.modal', () => isOpenModal = false)
+
+    $('#CreateFolderModal').on('hidden.bs.modal', () => isOpenModal = false)
+
+    $('#RemoveModal').on('hidden.bs.modal', () => isOpenModal = false)
+
+    $('#UploadProgressModal').on('hidden.bs.modal', () => isOpenModal = false)
+
+    $('#LogoutModal').on('hidden.bs.modal', () => isOpenModal = false)
+
+    $('#KeyboardShortCutsModal').on('hidden.bs.modal', () => isOpenModal = false)
+
     if (allowShortcut) {
         document.addEventListener("keydown", function(){
             if(Number(event.keyCode) === 27){
